@@ -1,6 +1,6 @@
-### Project Overview
+### Project Overview (still WIP)
 
-## timeline
+## Timeline
 
 1 week
 
@@ -11,28 +11,27 @@
 - JavaScript
 - Git & GitHub
 
-### introducing The Flipside Remix
+### Introducing The Flipside Remix Game
 
-to [place] Screenshot/Logo here
+to be [place] Screenshot here
 
 ## Description
 
-The Flipside Remix is a browser-based memory card game that challenges players to match the artists they love with the songs they know.
+**The Flipside Remix** is a browser-based memory card game that challenges players to match the artists they love with the songs they know.
 Inspired by music streaming culture, the game blends classic memory mechanics with a Spotify-style visual theme and fast-paced scoring system.
 
-Players match song titles to their correct artists across three progressively challenging levels.
-As the game advances, the grid expands, the timer shortens, and disruptive remix mechanics — like shuffle effects increase the difficulty.
+Players match song titles to their correct artists across three progressively challenging levels. As the game advances, the grid expands, the timer shortens, and disruptive remix mechanics — like shuffle effects increase the difficulty.
 
 Beyond memory and music knowledge, the game measures performance and assigns players a unique music persona based on their final score.
 
 ## How to Play
 
-- **Flip:**Click a card to reveal either a Song or an Artist.
-- **Match:**Find the correct Song–Artist pair to keep the cards face-up and earn points.
-- **Beat the Clock:**The countdown timer begins on your first move. Clear the board before time runs out.
-- **Combo Up:**Match quickly to activate combo scoring and double your points.
+- Flip: Click a card to reveal either a Song or an Artist.
+- Match: Find the correct Song–Artist pair to keep the cards face-up and earn points.
+- Beat the Clock: The countdown timer begins on your first move. Clear the board before time runs out.
+- Combo Up: Match quickly to activate combo scoring and double your points.
 
-to [place] Screenshot/how to play
+to be [place] Screenshot/how to play here.
 
 ## What it Takes to Win
 
@@ -67,20 +66,24 @@ to [place] Screenshot/how to play
 - Win or loss screen based on performance
 - Final score determines your assigned Music Persona
 
-[place] Screenshot/personas
-
-# persona categories
+# Persona categories
 
 link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 
 **The Soundwave Sage**
-score -> 80% - 100%
+
+- score -> 80% - 100%
+
 **The Beat Devotee**
-score -> 60% - 80%
+
+- score -> 60% - 80%
+
 **The Rhythm Rover**
-score -> 40% - 60%
+
+- score -> 40% - 60%
+
 **The Silent Mode Starter**
-score -> 0% - 40%
+s- core -> 0% - 40%
 
 ### Approach to Development
 
@@ -88,20 +91,26 @@ score -> 0% - 40%
 
 - MVP - Defined core MVP before adding enhancements
 - Wireframe - Created wireframes to map layout and information hierarchy
-  - Figuring out artists and songs list link [https://chatgpt.com/share/699d46f2-9670-8012-a42a-468f52e06452]
+  - Figuring out artists and songs list
+    - link [https://chatgpt.com/share/699d46f2-9670-8012-a42a-468f52e06452]
+    - link to [add wireframe folder]
 - User stories - Wrote user stories to clarify player interactions
+  - link to [add UserStories.md]
 - Presudocode - Developed pseudocode to outline game logic flow
+  - link to [add presudocode.js]
 - Game state - Defined game state variables (score, timer, moves, level, flipped cards, matched cards)
 
 ## 2 Developing
 
 - Main build (Html, CSS, JavaScript)
   - html
-    - screen 1
-    - game play
-      - score panel
-    - win/loss (overlay?)
+    - Main screen
+    - Game play screen
+      - dashboard panel
+    - win/loss (overlay)
   - CSS
+    - Flexbox
+    - bootstrap
   - Javascript
 - Features (Flip, shuffle, persona assignment)
 - Level up (light and dark mode, audio, Store data using localStorage, confetti on a win.)
