@@ -7,7 +7,7 @@
   --white: #ffffff;
   --dark-grey: #1a1a1a;
   --light-grey: #282828;
-  --text-muted: #707070;
+  --text-muted: #cccccc;
   --radius: 500px;
 }
 
@@ -25,16 +25,12 @@ img {
   display: block;
 }
 
-ul {
-  list-style: none;
-}
-
 body {
   font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  background-color: black;
-  color: white;
+  background-color: var(--black);
+  color: var(--white);
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /*----------------------------------------Typography*/
@@ -123,22 +119,26 @@ button,
   justify-content: center;
   align-items: center;
 }
-
+/*----------------------------------------Layout & Background*/
 .background-image {
+  position: fixed;
   inset: 0;
-  pointer-events: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
   object-fit: cover;
-  background-color: #1a1a2e;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 160px 16px 64px;
+  gap: 40px;
 }
 
 /*----------------------------------------The Header & Toggle */
@@ -148,7 +148,7 @@ button,
   top: 0;
   left: 0;
   width: 100%;
-  padding: 5px;
+  padding: 24px;
   display: flex;
   justify-content: center;
   z-index: 100;
@@ -158,35 +158,35 @@ button,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px;
 }
 
 .logo {
   height: 60px;
-}
-
-.logo-lockup {
-  /* Backup - style if image is broken! */
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 60px;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
-  color: #ffffff;
-  display: flex;
-  text-transform: uppercase;
-  justify-content: center;
-  flex-direction: column;
   margin-bottom: 8px;
-  position: relative;
 }
-/*----------------------------------------Tagline */
 .tagline {
   font-size: 21px;
   font-weight: 500;
   text-align: center;
 }
+
+/* .logo-lockup { */
+/* Backup - style if image is broken! */
+/* left: 50%; */
+/* top: 50%; */
+/* transform: translate(-50%, -50%); */
+/* height: 60px; */
+/* font-family: "Inter", sans-serif; */
+/* font-weight: 700; */
+/* color: #ffffff; */
+/* display: flex; */
+/* text-transform: uppercase; */
+/* justify-content: center; */
+/* flex-direction: column; */
+/* margin-bottom: 8px; */
+/* position: relative; */
+/* } */
+
 .header-actions {
   position: absolute;
   right: 24px;
@@ -194,7 +194,7 @@ button,
 }
 .mode-toggle-btn {
   position: absolute;
-  background-color: #000000;
+  background-color: var(--black);
   border: 2px solid #1db954;
   border-radius: 50%;
   width: 45px;
@@ -211,7 +211,7 @@ button,
 
 .mode-toggle-btn:hover {
   transform: scale(1.05);
-  background-color: #1db954;
+  background-color: var(--green);
   box-shadow: 0 0 10px rgba(12, 78, 35, 0.5);
 }
 
@@ -220,37 +220,29 @@ button,
   width: 22px;
   height: 22px;
   background-color: #ffffff;
-  -webkit-mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/moon.svg");
-  mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/moon.svg");
+  -webkit-mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
+  mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
   mask-repeat: no-repeat;
   mask-size: contain;
   -webkit-mask-position: center;
   mask-position: center;
-}
-
-#game-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 160px 16px 64px;
+  transition:
+    background-color 0.3s ease,
+    transform 0.4s ease;
 }
 
 /* BUTTONS */
 
 /*----------------------------------------BASE BUTTON - for all buttons */
 button {
-  font-family: "Inter", sans-serif;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 700;
-  height: 60px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
   border-radius: var(--radius);
-  padding: 12px 24px;
+  padding: 18px 32px;
   transition: all 0.2s ease;
   border: 2px solid transparent;
 }
@@ -262,185 +254,198 @@ button {
   width: 350px;
 }
 
-.btn-primary:hover {
-  background-color: var(--green);
-  color: var(--black);
-  transform: translateY(-2px);
-}
-
 /*----------------------------------------SECONDARY BUTTON */
 .btn-secondary {
-  width: 350px;
   background-color: var(--black);
   color: var(--white);
   border: 2px solid var(--green);
+  width: 350px;
 }
-
+/*----------------------------------------HOVER BUTTON */
+button:hover {
+  transform: translateY(-2px);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
 .btn-secondary:hover {
   background-color: var(--green);
   color: var(--black);
-  transform: translateY(-2px);
 }
-/*next level button*/
-#btn-overlay-action {
+
+.btn-reset {
   background-color: var(--green);
-  color: var(--black);
-  width: 210px;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/*----------------------------------------BUTTON GROUPING */
+
 .btn-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 15px;
   width: 100%;
+  align-items: center;
 }
 
-.btn-group button {
-  width: 100%;
-}
-
-.btn-primary:active,
-.btn-secondary:active {
-  transform: scale(0.97);
-}
-
-/* ----------------------------------------Name Form */
+/*----------------------------------------Forms*/
 .setup-form {
   width: 100%;
   max-width: 350px;
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-
 .setup-form label {
-  display: block;
-  font-size: 14px;
+  color: var(--green);
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 8px;
-  text-align: center;
   letter-spacing: 0.1em;
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
 }
-
 #playerName {
   width: 100%;
   height: 60px;
-  background-color: var(--white);
-  border: none;
   border-radius: var(--radius);
-  color: var(--black);
-  font-family: inherit;
+  border: none;
+  text-align: center;
   font-size: 18px;
   font-weight: 600;
-  text-align: center;
   margin-bottom: 15px;
-  transition: transform 0.2s ease;
 }
 
-#playerName::placeholder {
-  color: var(--text-muted);
-  opacity: 1;
-}
-
-#playerName:focus {
-  outline: none;
-  transform: scale(1.02);
-}
-
-/* ----------------------------------------SCREEN 1: START SCREEN */
-
+/*----------------------------------------Screens & Visibility*/
 .screen {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  text-align: center;
-  width: 100%;
-  padding-top: 0px;
 }
-
-/* use JS to hides screens */
 .hidden {
   display: none !important;
 }
 
-/*----------------------------------------Match Example Cards */
-#match-examples {
+/*----------------------------------------Overlays (Unified)*/
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-  width: 100%;
-  padding: 20px 0;
-  overflow-x: auto;
-  scrollbar-width: none;
+  z-index: 1000;
+  padding: 20px;
 }
 
-#match-examples::-webkit-scrollbar {
-  display: none;
-}
-
-.match-pair img {
-  width: 120px;
-  height: 120px;
-  border-radius: 12px;
-  object-fit: cover;
+.overlay-content {
+  background-color: var(--dark-grey);
   border: 2px solid var(--green);
-  background-color: var(--light-grey);
-  border-color: #1ed760;
-  background-color: var(--surface-raised);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.overlay-stats {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+/*----------------------------------------Match Examples*/
+#match-examples {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
 .match-pair {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
   position: relative;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
+  display: flex;
+  gap: 8px;
 }
-
-.match-pair:hover {
-  transform: scale(1.05);
+.match-pair img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  border: 2px solid var(--green);
 }
 
 .check-badge {
   position: absolute;
-  top: -12px;
-  right: -12px;
-  background-color: var(--green);
-  color: #000;
-  font-size: 16px;
-  font-weight: 900;
-  width: 32px;
-  height: 32px;
+  top: -10px;
+  right: -10px;
+  background: var(--green);
+  color: black;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 5;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  align-items: center;
+  font-weight: 900;
 }
-/*live game stats */
 
-.overlay-content {
+/*----------------------------------------Game Stats Panel*/
+.score-panel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid var(--green);
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--black);
+}
+
+.stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
-  text-align: center;
 }
-.current-game-stats {
+.stat span {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.stat-details {
+  font-size: 28px;
+  color: var(--white);
+}
+
+/*----------------------------------------Persona Template Styling*/
+.persona-card {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
 }
-/*----------------------------------------GAME GRID — LEVEL LAYOUTS*/
+
+.persona-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+
+.persona-title-display {
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.persona-description {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
