@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="/Icons/MusicIcon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>The Flipside Remix</title>
+  </head>
+
+  <body>
+    <!--my background -->
+    <img
+      src="/Assets/Background.svg"
+      alt=""
+      aria-hidden="true"
+      class="background-image"
+    />
+
+    <!--Logo Lockup-->
+    <header class="site-header">
+      <div class="header-center">
+        <div class="logo-lockup">
+          <img
+            src="/Assets/Game-Lockup.svg"
+            alt="The Flipside Remix"
+            class="logo"
+          />
+        </div>
+        <p class="tagline">Beat the clock. Match the sound.</p>
+      </div>
+      <div class="header-actions">
+        <button
+          id="mode-toggle"
+          aria-label="Toggle Light/Dark Mode"
+          class="mode-toggle-btn"
+        >
+          <span class="icon-visual"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN GAME CONTAINER - JS shows/hides screens inside here by toggling .hidden -->
+    <main id="game-container">
+      <!-- SCREEN 1: START SCREEN -->
+      <section id="screen-start" class="screen">
+        <!-- matched pair examples -->
+        <div id="match-examples">
+          <div class="match-pair">
+            <img
+              src="/Matches/match1/Get_Lucky.jpg"
+              alt="Get Lucky album art (Song)"
+            />
+            <img src="/Matches/match1/daft punk.png" alt="Daft Punk (Artist)" />
+            <span class="check-badge">✓</span>
+          </div>
+
+          <div class="match-pair">
+            <img src="/Matches/match3/Sorry.png" alt="Sorry album art (Song)" />
+            <img
+              src="/Matches/match3/justin bieber.jpeg"
+              alt="Justin Bieber (Artist)"
+            />
+            <span class="check-badge">✓</span>
+          </div>
+
+          <div class="match-pair">
+            <img
+              src="/Matches/match2/Take_me_to_Church.png"
+              alt="Take Me To Church album art (Song)"
+            />
+            <img src="/Matches/match2/Hozier.jpg" alt="Hozier (Artist)" />
+            <span class="check-badge">✓</span>
+          </div>
+        </div>
+        <!-- /#match-examples -->
+
+        <!-- Player name input + action buttons -->
+        <div class="setup-form">
+          <label for="playerName">Player Name</label><br />
+          <input
+            id="playerName"
+            type="text"
+            placeholder="Jane Doe"
+            maxlength="12"
+          />
+          <div class="btn-group">
+            <button id="btn-play" class="btn-primary">Play Game</button>
+            <button id="btn-how" class="btn-secondary">How To Play</button>
+          </div>
+        </div>
+
+        <!-- How To Play Modal — JS toggles .hidden -->
+        <div id="instructions" class="modal hidden">
+          <div class="modal-content">
+            <h4>How to Play</h4>
+            <ul>
+              <li>
+                <strong>Flip —</strong> Click a card to reveal a Song or Artist.
+              </li>
+              <li>
+                <strong>Match —</strong> Find the correct pair to keep them
+                face-up.
+              </li>
+              <li>
+                <strong>Beat the Clock —</strong> Timer starts on your first
+                move.
+              </li>
+              <li>
+                <strong>Combo Up —</strong> Match quickly to double your points.
+              </li>
+            </ul>
+            <button class="btn-close btn-secondary">Got it!</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: GAME SCREEN -->
+      <section id="screen-game" class="screen hidden">
+        <!-- Live stats bar -->
+        <div class="score-panel">
+          <div class="stat">
+            <span>Level</span>
+            <strong id="level-display">1</strong>
+          </div>
+          <div class="stat">
+            <span>Time</span>
+            <strong id="timer-display">00:30</strong>
+          </div>
+          <div class="stat">
+            <span>Score</span>
+            <strong id="score-display">0</strong>
+          </div>
+          <div class="stat">
+            <span>Moves</span>
+            <strong id="moves-display">0</strong>
+          </div>
+          <button id="btn-reset" title="Reset Game">🔄</button>
+        </div>
+
+        <div id="game-grid" class="grid-level-1"></div>
+      </section>
+      <!-- TO DO screen game board -->
+
+      <!-- OVERLAY — Level Clear / Game Over-->
+
+      <div id="game-overlay" class="overlay hidden">
+        <div class="overlay-content">
+          <h2 id="overlay-title">That's a match. 🎉</h2>
+          <h4>You’ve got the ear for this!</h4>
+          <p class="current-game-stats">
+            Level [X] Complete<br />
+            Pairs matched: [X] / [X] <br />
+            Score this level: [000]
+          </p>
+          <p id="overlay-message">Get ready for the next remix...</p>
+          <button id="btn-overlay-action" class="btn-primary">
+            Next Level
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: VICTORY / PERSONA SCREEN -->
+      <section id="screen-victory" class="screen hidden">
+        <h4 class="persona-heading">🎧 Discover Your Sound Persona</h4>
+
+        <!-- Persona 1 - 80–100% -->
+        <div
+          id="persona-sage"
+          class="persona-card"
+          data-min="80"
+          data-max="100"
+        >
+          <p class="persona-label">You are:</p>
+          <h3 class="persona-name">The Soundwave Sage</h3>
+          <img
+            src="/Assets/Persona1.png"
+            alt="persona 4: The Silent Mode Starter"
+          />
+          <h3>You don't just listen. You live in surround sound.</h3>
+          <p>
+            Music is your oxygen. You've got playlists for moods you haven't
+            even felt yet.<br />
+            New drops? Already saved. Deep cuts? Already looping.<br />
+            You don't follow trends — you discover them first.
+          </p>
+        </div>
+
+        <!-- Persona 2 - 60–79% -->
+        <div
+          id="persona-devotee"
+          class="persona-card"
+          data-min="60"
+          data-max="79"
+        >
+          <p class="persona-label">You are:</p>
+          <h3 class="persona-name">The Beat Devotee</h3>
+          <img src="/Assets/Persona2.png" alt="persona 2: The Beat Devotee" />
+          <h3>Your life has a solid soundtrack.</h3>
+          <p>
+            You show up for the music.<br />
+            Commutes, workouts, late nights — you've got a curated vibe
+            ready.<br />
+            You're loyal… but not predictable.
+          </p>
+        </div>
+
+        <!-- Persona 3 - 40–59% -->
+        <div
+          id="persona-rover"
+          class="persona-card"
+          data-min="40"
+          data-max="59"
+        >
+          <p class="persona-label">You are:</p>
+          <h3 class="persona-name">The Rhythm Rover</h3>
+          <img
+            src="/Assets/Persona3.png"
+            alt="persona 3: The Silent Mode Starter"
+          />
+          <h3>You surf the soundwaves</h3>
+          <p>
+            You dip in when the mood hits.<br />
+            Some days it's nonstop streaming, other days radio silence.<br />
+            Music finds you more than you hunt for it.
+          </p>
+        </div>
+
+        <!-- Persona 4 - 0–39% -->
+        <div
+          id="persona-starter"
+          class="persona-card"
+          data-min="0"
+          data-max="39"
+        >
+          <p class="persona-label">You are:</p>
+          <h3 class="persona-name">The Silent Mode Starter</h3>
+          <img
+            src="/Assets/Persona4.png"
+            alt="persona 4: The Silent Mode Starter"
+          />
+          <h3>Your ears deserve better.</h3>
+          <p>
+            You've got potential.<br />
+            Your speakers are waiting.<br />
+            The soundtrack of your life? Still buffering.
+          </p>
+        </div>
+        <button id="btn-play-again" class="btn-primary">Play Again</button>
+      </section>
+      <!-- TO DO #screen-victory -->
+    </main>
+    <script src="script.js" defer></script>
+  </body>
+</html>

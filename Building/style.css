@@ -1,0 +1,446 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/*----------------------------------------The "Root" & Reset*/
+:root {
+  --green: #1ed760;
+  --green-dark: #007c2c;
+  --black: #000000;
+  --white: #ffffff;
+  --dark-grey: #1a1a1a;
+  --light-grey: #282828;
+  --text-muted: #707070;
+  --radius: 500px;
+}
+
+/*----------------------------------------RESET */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+/*----------------------------------------Typography*/
+h1,
+.h1 {
+  font-size: 42px; /* 60pt */
+  font-weight: 700; /* Bold */
+  line-height: 1.2;
+}
+
+h2,
+.h2 {
+  font-size: 32px; /* 42pt */
+  font-weight: 700; /* Light */
+  line-height: 1.2;
+}
+
+h3,
+.h3 {
+  font-size: 28px; /* 32pt */
+  font-weight: 500; /* Medium */
+  line-height: 1.2;
+}
+
+h4,
+.h4 {
+  font-size: 24px; /* 28pt */
+  font-weight: 500; /* Medium */
+  line-height: 1.2;
+}
+
+.p1 {
+  font-size: 21px; /* 24pt */
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p2 {
+  font-size: 18px; /* 21pt */
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p2-bold {
+  font-size: 18px; /* 21pt */
+  font-weight: 700; /* Bold */
+  line-height: 1.2;
+}
+
+.p3 {
+  font-size: 14px; /* 18pt */
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p4 {
+  font-size: 12px; /* 14pt */
+  font-weight: 700; /* Bold */
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+button,
+.button {
+  font-size: 18px; /* 21pt */
+  font-weight: 700; /* Bold */
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/*----------------------------------------LAYOUT */
+
+.flex-parent {
+  background-color: black;
+  display: flex;
+  height: 600px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-child {
+  font-size: 48px;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-image {
+  inset: 0;
+  pointer-events: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+  background-color: #1a1a2e;
+}
+
+/*----------------------------------------The Header & Toggle */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.logo {
+  height: 60px;
+}
+
+.logo-lockup {
+  /* Backup - style if image is broken! */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 60px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  text-transform: uppercase;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 8px;
+  position: relative;
+}
+/*----------------------------------------Tagline */
+.tagline {
+  font-size: 21px;
+  font-weight: 500;
+  text-align: center;
+}
+.header-actions {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+.mode-toggle-btn {
+  position: absolute;
+  background-color: #000000;
+  border: 2px solid #1db954;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 24px;
+  top: 24px;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.mode-toggle-btn:hover {
+  transform: scale(1.05);
+  background-color: #1db954;
+  box-shadow: 0 0 10px rgba(12, 78, 35, 0.5);
+}
+
+/* ----------------------------------------The Icon inside the button */
+.icon-visual {
+  width: 22px;
+  height: 22px;
+  background-color: #ffffff;
+  -webkit-mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/moon.svg");
+  mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/moon.svg");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 160px 16px 64px;
+}
+
+/* BUTTONS */
+
+/*----------------------------------------BASE BUTTON - for all buttons */
+button {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  height: 60px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: var(--radius);
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+/*----------------------------------------PRIMARY BUTTON */
+.btn-primary {
+  background-color: var(--green);
+  color: var(--black);
+  width: 350px;
+}
+
+.btn-primary:hover {
+  background-color: var(--green);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+/*----------------------------------------SECONDARY BUTTON */
+.btn-secondary {
+  width: 350px;
+  background-color: var(--black);
+  color: var(--white);
+  border: 2px solid var(--green);
+}
+
+.btn-secondary:hover {
+  background-color: var(--green);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+/*next level button*/
+#btn-overlay-action {
+  background-color: var(--green);
+  color: var(--black);
+  width: 210px;
+}
+/*----------------------------------------BUTTON GROUPING */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.btn-group button {
+  width: 100%;
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+/* ----------------------------------------Name Form */
+.setup-form {
+  width: 100%;
+  max-width: 350px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setup-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+#playerName {
+  width: 100%;
+  height: 60px;
+  background-color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--black);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 15px;
+  transition: transform 0.2s ease;
+}
+
+#playerName::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+#playerName:focus {
+  outline: none;
+  transform: scale(1.02);
+}
+
+/* ----------------------------------------SCREEN 1: START SCREEN */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  width: 100%;
+  padding-top: 0px;
+}
+
+/* use JS to hides screens */
+.hidden {
+  display: none !important;
+}
+
+/*----------------------------------------Match Example Cards */
+#match-examples {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  padding: 20px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#match-examples::-webkit-scrollbar {
+  display: none;
+}
+
+.match-pair img {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid var(--green);
+  background-color: var(--light-grey);
+  border-color: #1ed760;
+  background-color: var(--surface-raised);
+}
+
+.match-pair {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.match-pair:hover {
+  transform: scale(1.05);
+}
+
+.check-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: var(--green);
+  color: #000;
+  font-size: 16px;
+  font-weight: 900;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+/*live game stats */
+
+.overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+}
+.current-game-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/*----------------------------------------GAME GRID — LEVEL LAYOUTS*/
