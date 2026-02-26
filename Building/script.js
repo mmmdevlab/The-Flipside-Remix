@@ -1,21 +1,22 @@
 import * as GameData from "./data.js";
 
-console.log(GameData.levels);
-console.log(GameData.personas);
-console.log(GameData.buttonMenu);
+// console.log(GameData.levels);
+// console.log(GameData.personas);
+// console.log(GameData.buttonMenu);
 
 /*-------------------------------- Constants --------------------------------*/
-
-//deck array for my cards
 
 /*---------------------------- Variables (state) ----------------------------*/
 
 let playerName = "Guest";
+
 let currentLevel = 0;
 let score = 0;
 let moves = 0;
 let timer = 0;
 let timeLeft = 0;
+let firstCard = 0;
+let secondCard = 0;
 
 //? Active Cards: First card clicked, Second card clicked (to compare them)
 //? Lock Board: Boolean to prevent clicking a 3rd card during a match check
@@ -35,20 +36,103 @@ const btnPlay = document.getElementById("btn-play");
 const btnHow = document.getElementById("btn-how");
 // console.log("how to play button", btnHow);
 
+const gameGrid = document.getElementById("game-grid");
+//console.log("grid")
+
+const overlayHow = document.getElementById("overlay-instructions");
+// console.log(overlayHow);
+const btnCloseHow = document.getElementById("btn-close-instructions");
+// console.log(btnCloseHow);
+
 //? Grab the Grid Container
 //? Grab the Dashboard items (Timer, Score, Moves displays)
 //? Grab all the Screens (Start, Game, Overlays)
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
-//? create board:
-//? start game :
-//? card click:
-//? check match:
+// shuffle function
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+  }
+  return array;
+};
+
+// render the board
+const renderBoard = (cards, level) => {
+  gameGrid.innerHTML = "";
+  gameGrid.style.gridTemplateColumns = `repeat(${level.cols}, 1fr)`;
+
+  cards.forEach((card) => {
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("card");
+    cardElement.dataset.pairId = card.pairId;
+    cardElement.dataset.type = card.type;
+    cardElement.textContent = card.value;
+    gameGrid.appendChild(cardElement);
+  });
+};
+
+// start the game
+const startGame = () => {
+  const typedName = inputName.value.trim();
+  if (typedName !== "") {
+    playerName = typedName;
+  } else {
+    playerName = "Guest";
+  }
+  // console.log("Player Name set to:", playerName);
+
+  screenStart.classList.add("hidden");
+  screenGame.classList.remove("hidden");
+
+  // console.log(GameData.levels[0]); // does level 1 print?
+  // console.log(GameData.levels[0].matchPairs); // do the pairs print?
+
+  const level = GameData.levels[currentLevel];
+  const cards = [];
+
+  GameData.levels[currentLevel].matchPairs.forEach((pair) => {
+    cards.push({ type: "artist", value: pair.artist, pairId: pair.artist });
+    cards.push({ type: "title", value: pair.title, pairId: pair.artist });
+  });
+  // console.log(cards);
+  const shuffled = shuffle(cards);
+  // console.log(shuffled);
+  renderBoard(shuffled, level);
+};
+
+//card click
+
+//card match check
+
+//score panel
+
+//win/loss condition
+//stats update
+//mid-game shuffle feature
+
 //? add audio object [cardClick, correctMatch, winLevelSound, lossLevelSound,]
 //? help function called playSound to trigger when interacted -
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-//? Button Triggers :
+/* adding click to 'PLAY' button */
+btnPlay.addEventListener("click", startGame);
+inputName.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    startGame();
+  }
+});
+
+/* adding click to 'HOW TO PLAY' button  */
+btnHow.addEventListener("click", () => {
+  overlayHow.showModal();
+});
+btnCloseHow.addEventListener("click", () => {
+  overlayHow.close();
+});
+
+//? Button Triggers:
 //? Board Triggers:

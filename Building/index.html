@@ -87,13 +87,13 @@
           </div>
         </div>
 
-        <!----------------------------------------------- Player name input + action buttons -->
+        <!----------------------------------------------- SCREEN 1: Player name input + action buttons -->
         <div class="setup-form">
           <label for="playerName">Player Name</label>
           <input
             id="playerName"
             type="text"
-            placeholder="Player Name"
+            placeholder="Name"
             maxlength="12"
             autocomplete="off"
           />
@@ -112,118 +112,139 @@
       </section>
       <!----------------------------------------------- SCREEN 2: GAME SCREEN -->
       <section id="screen-game" class="screen hidden">
-        <div class="score-panel">
-          <div class="stat">
-            <span>Level</span>
-            <strong class="stat-details" id="level-display">1</strong>
-          </div>
-          <div class="stat">
-            <span>Time</span
-            ><strong class="stat-details" id="timer-display">00:30</strong>
-          </div>
-          <div class="stat">
-            <span>Score</span
-            ><strong class="stat-details" id="score-display">0</strong>
-          </div>
-          <div class="stat">
-            <span>Moves</span
-            ><strong class="stat-details" id="moves-display">0</strong>
-          </div>
-          <button id="btn-reset" title="Reset Game" class="btn-reset">
-            <img src="/Icons/RestartIcon.svg" alt="Restart" class="svg-icon" />
-          </button>
-        </div>
-
         <div class="board-container">
           <div id="game-grid">
             <!--cards to be created here-->
           </div>
         </div>
+        <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
+        <div class="score-panel">
+          <div class="stat-level">
+            <span>Level</span>
+            <strong class="stat-details" id="level-display">1</strong>
+          </div>
+          <div class="stat-time">
+            <span>Time</span
+            ><strong class="stat-details" id="timer-display">00:30</strong>
+          </div>
+          <div class="stat-score">
+            <span>Score</span
+            ><strong class="stat-details" id="score-display">0</strong>
+          </div>
+          <div class="stat-moves">
+            <span>Moves</span
+            ><strong class="stat-details" id="moves-display">0</strong>
+          </div>
+          <button
+            id="btn-reset"
+            title="Reset Game"
+            aria-label="Reset Game"
+            class="btn-reset"
+          >
+            <img src="/Icons/RestartIcon.svg" alt="" class="svg-icon" />
+          </button>
+        </div>
       </section>
-      <!----------------------------------------------- OVERLAY - instructions -->
-      <dialog id="overlay-instructions" class="overlay">
-        <div class="overlay-content">
-          <h4 id="instructions-title">How to Play</h4>
-          <ul>
-            <li>
-              <strong>Flip</strong> Click a card to reveal a Song or Artist.
-            </li>
-            <li><strong>Match</strong> Find the correct pair.</li>
-            <li>
-              <strong>Beat the Clock</strong> Timer starts on your first move.
-            </li>
-            <li><strong>Combo Up</strong> Match quickly to double points.</li>
-          </ul>
-          <button id="btn-close-instructions" class="btn-secondary">
-            Got it!
-          </button>
-        </div>
-      </dialog>
-      <!----------------------------------------------- OVERLAY — Level Clear -->
-      <dialog id="overlay-win" class="overlay">
-        <div class="overlay-content">
-          <h2 id="win-title">Level Cleared!</h2>
-          <div class="overlay-stats">
-            <p>Pairs matched: <span id="win-pairs"></span></p>
-            <p>Score this level: <span id="win-score"></span></p>
-          </div>
-          <button id="btn-next-level" class="btn-primary">Next Level</button>
-        </div>
-      </dialog>
-      <!----------------------------------------------- OVERLAY — Game Over-->
-      <dialog id="overlay-loss" class="overlay">
-        <div class="overlay-content">
-          <h2 id="loss-title">Game Over</h2>
-          <div class="overlay-stats">
-            <p>Score: <span id="loss-score"></span></p>
-          </div>
-          <button id="btn-try-again" class="btn-primary">Try Again</button>
-        </div>
-      </dialog>
-      <!----------------------------------------------- OVERLAY - All Levels completed  -->
-      <dialog
-        id="overlay-complete"
-        class="overlay"
-        aria-modal="true"
-        aria-labelledby="complete-title"
-      >
-        <div class="overlay-content">
-          <h2 id="complete-title">Game Complete!</h2>
-          <h3 id="complete-subtitle"></h3>
-          <div class="overlay-stats">
-            <p>Total Score:<span id="complete-score"></span></p>
-            <p>Score Percentage: <span id="complete-percentage"></span></p>
-          </div>
-          <button type="button" id="btn-show-persona" class="btn-primary">
-            Show Results
-          </button>
-        </div>
-      </dialog>
-      <!----------------------------------------------- OVERLAY - results show PERSONA  -->
-      <dialog
-        id="overlay-persona"
-        class="overlay"
-        aria-modal="true"
-        aria-labelledby="result-title"
-      >
-        <div class="overlay-content">
-          <h2 id="result-title">🎧 Discover Your Sound Persona</h2>
-          <div id="results-points"><span>0</span></div>
-          <button type="button" id="download-btn" class="btn-primary">
-            Download
-          </button>
-        </div>
-      </dialog>
-
-      <template id="persona-template">
-        <div class="persona-card">
-          <img class="persona-img" src="" alt="" />
-          <h2 class="persona-label"></h2>
-          <h3 class="persona-message"></h3>
-          <p class="persona-description"></p>
-        </div>
-      </template>
     </main>
+    <!----------------------------------------------- OVERLAY - Instructions -->
+    <dialog
+      id="overlay-instructions"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="instructions-title"
+    >
+      <div class="overlay-content">
+        <h4 id="instructions-title">How to Play</h4>
+        <ul>
+          <li>
+            <strong>Flip</strong> Click a card to reveal a <em>Song</em> or
+            <em>Artist.</em>
+          </li>
+          <li><strong>Match</strong> Find the correct pair.</li>
+          <li>
+            <strong>Beat the Clock</strong> Timer starts on your first move.
+          </li>
+          <li><strong>Combo Up</strong> Match quickly to double points.</li>
+        </ul>
+        <button id="btn-close-instructions" class="btn-secondary">
+          Got it!
+        </button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY — WIN -->
+    <dialog
+      id="overlay-win"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="win-title"
+    >
+      <div class="overlay-content">
+        <h2 id="win-title">Level Cleared!</h2>
+        <div class="overlay-stats">
+          <p>Pairs matched: <span id="win-pairs"></span></p>
+          <p>Score this level: <span id="win-score"></span></p>
+        </div>
+        <button id="btn-next-level" class="btn-primary">Next Level</button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY — LOST-->
+    <dialog
+      id="overlay-loss"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="loss-title"
+    >
+      <div class="overlay-content">
+        <h2 id="loss-title">Game Over</h2>
+        <div class="overlay-stats">
+          <p>Score: <span id="loss-score"></span></p>
+        </div>
+        <button id="btn-try-again" class="btn-primary">Try Again</button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY - All Levels completed  -->
+    <dialog
+      id="overlay-complete"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="complete-title"
+    >
+      <div class="overlay-content">
+        <h2 id="complete-title">Game Complete!</h2>
+        <h3 id="complete-subtitle"></h3>
+        <div class="overlay-stats">
+          <p>Total Score:<span id="complete-score"></span></p>
+          <p>Score Percentage: <span id="complete-percentage"></span></p>
+        </div>
+        <button type="button" id="btn-show-persona" class="btn-primary">
+          Show Results
+        </button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY - results show PERSONA  -->
+    <dialog
+      id="overlay-persona"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="result-title"
+    >
+      <div class="overlay-content">
+        <h2 id="result-title">🎧 Discover Your Sound Persona</h2>
+        <div id="results-points"><span>0</span></div>
+        <button type="button" id="download-btn" class="btn-primary">
+          Download
+        </button>
+      </div>
+    </dialog>
+
+    <template id="persona-template">
+      <div class="persona-card">
+        <img class="persona-img" src="" alt="" />
+        <h2 class="persona-label"></h2>
+        <h3 class="persona-message"></h3>
+        <p class="persona-description"></p>
+      </div>
+    </template>
     <script src="script.js" type="module" defer></script>
   </body>
 </html>

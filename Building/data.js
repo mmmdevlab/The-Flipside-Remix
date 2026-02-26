@@ -5,9 +5,8 @@ export const levels = [
     cols: 4,
     timeLimit: 60,
     totalCards: 12,
-    matchPairs: 6,
-    hasShuffle: false,
-    pairs: [
+    hasShuffle: true,
+    matchPairs: [
       { artist: "Bad Bunny", title: "Monaco" },
       { artist: "Billie Eilish", title: "Birds of a Feather" },
       { artist: "Kendrick Lamar", title: "Not Like Us" },
@@ -22,10 +21,9 @@ export const levels = [
     cols: 6,
     timeLimit: 90,
     totalCards: 18,
-    matchPairs: 9,
     hasShuffle: true,
     hasCombo: true,
-    pairs: [
+    matchPairs: [
       { artist: "Bruno Mars", title: "Die With A Smile" },
       { artist: "Sabrina Carpenter", title: "Espresso" },
       { artist: "Stray Kids", title: "Chk Chk Boom" },
@@ -43,10 +41,9 @@ export const levels = [
     cols: 7,
     timeLimit: 120,
     totalCards: 28,
-    matchPairs: 14,
     hasShuffle: true,
     hasCombo: true,
-    pairs: [
+    matchPairs: [
       { artist: "Chappell Roan", title: "Good Luck, Babe!" },
       { artist: "Beyoncé", title: "TEXAS HOLD 'EM" },
       { artist: "Doja Cat", title: "Paint The Town Red" },
