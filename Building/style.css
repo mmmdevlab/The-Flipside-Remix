@@ -31,6 +31,9 @@ body {
   color: var(--white);
   overflow-x: hidden;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /*----------------------------------------Typography*/
@@ -139,33 +142,39 @@ button,
 }
 #game-container {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 160px 16px 64px;
-  gap: 40px;
+  padding: 40px 16px;
+  /* gap: 40px; */
+  flex-grow: 1;
 }
 
 #game-grid {
   display: grid;
   height: auto;
   width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
   gap: 10px;
 }
 
 /*----------------------------------------The Header & Toggle */
 
 .site-header {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 24px;
+  padding: 60px 20px 0px;
   display: flex;
   justify-content: center;
   z-index: 100;
+  flex-shrink: 0;
 }
 
 .header-center {
@@ -494,28 +503,28 @@ dialog[open] {
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   border: 1px solid var(--green);
-  padding: 20px;
+  padding: 15px 25px;
   border-radius: 12px;
   background: var(--black);
 }
 
 .stat {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
 }
 .stat span {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--green);
 }
 .stat-details {
-  font-size: 28px;
-  color: var(--white);
+  font-size: 24px;
+  font-weight: 700;
 }
-
 /*----------------------------------------Persona Template Styling*/
 .persona-card {
   padding: 20px;
@@ -546,21 +555,57 @@ dialog[open] {
 /*-----------------------------------------Cards*/
 
 .card {
-  display: flex;
-  width: 100%;
+  position: relative;
+  width: 100px;
   aspect-ratio: 1;
-  background-color: var(--dark-grey);
-  border-radius: 10%;
-  border: 2px solid var(--green);
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: var(--white);
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  background-color: transparent;
 }
 
-.card.flipped {
+.card-front,
+.card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--green);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.card-front {
+  background-color: var(--dark-grey);
+  z-index: 2;
+}
+
+.card-back {
   background-color: var(--green-dark);
   color: var(--white);
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1;
+  opacity: 0;
+}
+
+.card.flipped .card-front {
+  opacity: 0;
+}
+
+.card.flipped .card-back {
+  opacity: 1;
+}
+
+.card:hover:not(.flipped) .card-front {
+  border-color: var(--white);
+}
+.card-front svg {
+  width: 40%;
+  height: auto;
+  color: var(--green);
 }
