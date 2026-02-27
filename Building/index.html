@@ -116,9 +116,35 @@
           <div id="game-grid">
             <!--cards to be created here-->
           </div>
+          <div class="score-panel">
+            <div class="stat-level">
+              <span>Level</span>
+              <strong class="stat-details" id="level-display">1</strong>
+            </div>
+            <div class="stat-time">
+              <span>Time</span
+              ><strong class="stat-details" id="timer-display">00:30</strong>
+            </div>
+            <div class="stat-score">
+              <span>Score</span
+              ><strong class="stat-details" id="score-display">0</strong>
+            </div>
+            <div class="stat-moves">
+              <span>Moves</span
+              ><strong class="stat-details" id="moves-display">0</strong>
+            </div>
+            <button
+              id="btn-reset"
+              title="Reset Game"
+              aria-label="Reset Game"
+              class="btn-reset"
+            >
+              <img src="/Icons/RestartIcon.svg" alt="" class="svg-icon" />
+            </button>
+          </div>
         </div>
         <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
-        <div class="score-panel">
+        <!-- <div class="score-panel">
           <div class="stat-level">
             <span>Level</span>
             <strong class="stat-details" id="level-display">1</strong>
@@ -143,7 +169,7 @@
           >
             <img src="/Icons/RestartIcon.svg" alt="" class="svg-icon" />
           </button>
-        </div>
+        </div> -->
       </section>
     </main>
     <!----------------------------------------------- OVERLAY - Instructions -->

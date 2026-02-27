@@ -15,8 +15,10 @@ let score = 0;
 let moves = 0;
 let timer = 0;
 let timeLeft = 0;
-let firstCard = 0;
+
+let firstCard = null;
 let secondCard = 0;
+let lockBoard = false;
 
 //? Active Cards: First card clicked, Second card clicked (to compare them)
 //? Lock Board: Boolean to prevent clicking a 3rd card during a match check
@@ -59,10 +61,37 @@ const shuffle = (array) => {
   return array;
 };
 
+//flip card
+const flipCard = (event) => {
+  event.target.classList.add("flipped");
+
+  if (!firstCard) {
+    firstCard = event.target;
+    return;
+  }
+  secondCard = event.target;
+  checkForMatch(firstCard, secondCard);
+};
+//card click
+
+// when a card is clicked:
+//   1. flip this card (add .flipped)
+
+//   2. if firstCard is empty:
+//        store ??? in firstCard
+
+//   3. if firstCard is NOT empty:
+//        store ??? in secondCard
+//        now compare:
+//          if firstCard.??? === secondCard.???
+//            → it's a match!
+//          else
+//            → not a match
 // render the board
 const renderBoard = (cards, level) => {
   gameGrid.innerHTML = "";
   gameGrid.style.gridTemplateColumns = `repeat(${level.cols}, 1fr)`;
+  gameGrid.style.gridTemplateRows = `repeat(${level.rows}, 1fr)`;
 
   cards.forEach((card) => {
     const cardElement = document.createElement("div");
@@ -71,6 +100,7 @@ const renderBoard = (cards, level) => {
     cardElement.dataset.type = card.type;
     cardElement.textContent = card.value;
     gameGrid.appendChild(cardElement);
+    cardElement.addEventListener("click", flipCard);
   });
 };
 
@@ -102,8 +132,6 @@ const startGame = () => {
   // console.log(shuffled);
   renderBoard(shuffled, level);
 };
-
-//card click
 
 //card match check
 
