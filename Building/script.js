@@ -17,12 +17,8 @@ let timer = 0;
 let timeLeft = 0;
 
 let firstCard = null;
-let secondCard = 0;
+let secondCard = null;
 let lockBoard = false;
-
-//? Active Cards: First card clicked, Second card clicked (to compare them)
-//? Lock Board: Boolean to prevent clicking a 3rd card during a match check
-//? Game Started: Boolean to check if the timer should begin
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -52,7 +48,7 @@ const btnCloseHow = document.getElementById("btn-close-instructions");
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
-// shuffle function
+/*----------------------------shuffle function----------------------------*/
 const shuffle = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
@@ -61,33 +57,47 @@ const shuffle = (array) => {
   return array;
 };
 
-//flip card
+/*----------------------------flip card----------------------------*/
 const flipCard = (event) => {
+  if (lockBoard) return;
   event.target.classList.add("flipped");
 
   if (!firstCard) {
     firstCard = event.target;
+    // console.log(firstCard.dataset.pairId);
     return;
   }
   secondCard = event.target;
-  checkForMatch(firstCard, secondCard);
+  // console.log(secondCard.dataset.pairId);
+  lockBoard = true;
+  // console.log(lockBoard);
+  checkForMatch();
 };
-//card click
 
-// when a card is clicked:
-//   1. flip this card (add .flipped)
+/*----------------------------check for match----------------------------*/
+const checkForMatch = () => {
+  if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+    // console.log("matched", firstCard.dataset.pairId); // print match
+    firstCard.removeEventListener("click", flipCard);
+    secondCard.removeEventListener("click", flipCard);
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+  } else {
+    // console.log("no match", firstCard.dataset.pairId); // print no match
+    setTimeout(() => {
+      firstCard.classList.remove("flipped");
+      secondCard.classList.remove("flipped");
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }, 1000);
+  }
+  moves++;
+  console.log("moves:", moves); // print the moves count
+};
 
-//   2. if firstCard is empty:
-//        store ??? in firstCard
-
-//   3. if firstCard is NOT empty:
-//        store ??? in secondCard
-//        now compare:
-//          if firstCard.??? === secondCard.???
-//            → it's a match!
-//          else
-//            → not a match
-// render the board
+/*----------------------------render the board----------------------------*/
 const renderBoard = (cards, level) => {
   gameGrid.innerHTML = "";
   gameGrid.style.gridTemplateColumns = `repeat(${level.cols}, 1fr)`;
@@ -104,7 +114,7 @@ const renderBoard = (cards, level) => {
   });
 };
 
-// start the game
+/*----------------------------start the game----------------------------*/
 const startGame = () => {
   const typedName = inputName.value.trim();
   if (typedName !== "") {
@@ -112,7 +122,7 @@ const startGame = () => {
   } else {
     playerName = "Guest";
   }
-  // console.log("Player Name set to:", playerName);
+  // console.log(playerName);
 
   screenStart.classList.add("hidden");
   screenGame.classList.remove("hidden");
@@ -121,6 +131,7 @@ const startGame = () => {
   // console.log(GameData.levels[0].matchPairs); // do the pairs print?
 
   const level = GameData.levels[currentLevel];
+  // console.log(currentLevel);
   const cards = [];
 
   GameData.levels[currentLevel].matchPairs.forEach((pair) => {
@@ -133,13 +144,11 @@ const startGame = () => {
   renderBoard(shuffled, level);
 };
 
-//card match check
+/*----------------------------score panel----------------------------*/
 
-//score panel
-
-//win/loss condition
-//stats update
-//mid-game shuffle feature
+/*----------------------------win/loss condition----------------------------*/
+/*----------------------------stats update----------------------------*/
+/*----------------------------mid-game shuffle feature----------------------------*/
 
 //? add audio object [cardClick, correctMatch, winLevelSound, lossLevelSound,]
 //? help function called playSound to trigger when interacted -
