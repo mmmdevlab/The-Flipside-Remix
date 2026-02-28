@@ -14,7 +14,7 @@ let currentLevel = 0;
 let score = 0;
 let moves = 0;
 let timer = 0;
-let timeLeft = null;
+let timeLeft = 0;
 let timerInterval = null;
 
 let firstCard = null;
@@ -39,6 +39,8 @@ const btnPlay = document.getElementById("btn-play");
 const btnHow = document.getElementById("btn-how");
 // console.log("how to play button", btnHow);
 
+const btnHowHeader = document.getElementById("btn-how-header");
+
 const overlayHow = document.getElementById("overlay-instructions");
 // console.log(overlayHow);
 const btnCloseHow = document.getElementById("btn-close-instructions");
@@ -53,18 +55,29 @@ console.log(scoreDisplay);
 const movesDisplay = document.getElementById("moves-display");
 console.log(movesDisplay);
 
-//? Grab all the Screens (win Overlay, loss overlay, victory (all levels complete overlay, persona overlay))
+const overlayLoss = document.getElementById("overlay-loss");
+console.log(overlayLoss);
+const lossScore = document.getElementById("loss-score");
+console.log(lossScore);
+
+const overlayWin = document.getElementById("overlay-win");
+console.log(overlayWin);
+const winScore = document.getElementById("win-score");
+console.log(winScore);
+
+//? Grab all the Screens (victory (all levels complete overlay, persona overlay))
 //? one thing to add on which i forgot - before the level game start i wanted to pop up stating the time they have to complete the level overlay.
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
 /*----------------------------shuffle function----------------------------*/
 const shuffle = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
-    [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+    [newArray[i], newArray[randomIndex]] = [newArray[randomIndex], newArray[i]];
   }
-  return array;
+  return newArray;
 };
 
 /*----------------------------flip card----------------------------*/
@@ -101,8 +114,11 @@ const checkForMatch = () => {
     firstCard = null;
     secondCard = null;
     lockBoard = false;
+
+    updateScore();
   } else {
     // console.log("no match", firstCard.dataset.pairId); // print no match
+    consecutiveMatches = 0;
     setTimeout(() => {
       firstCard.classList.remove("flipped");
       secondCard.classList.remove("flipped");
@@ -111,7 +127,8 @@ const checkForMatch = () => {
       lockBoard = false;
     }, 1000);
   }
-  moves++;
+
+  updateMoves();
   console.log("moves:", moves); // print the moves count
 };
 
@@ -183,6 +200,9 @@ const startGame = () => {
   const shuffled = shuffle(cards);
   // console.log(shuffled);
   renderBoard(shuffled, level);
+
+  moves = 0;
+  movesDisplay.textContent = moves;
 };
 
 /*----------------------------score panel----------------------------*/
@@ -193,12 +213,15 @@ const startCountdown = (seconds) => {
   timerDisplay.textContent = timeLeft;
 
   timerInterval = window.setInterval(() => {
-    timeLeft = timeLeft - 1;
+    timeLeft--;
     timerDisplay.textContent = timeLeft;
 
     if (timeLeft <= 0) {
       stopTimer();
-      console.log("GameOver"); // update with my dialog loss overlay
+      // console.log("GameOver"); // update with my dialog loss overlay
+      lockBoard = true;
+      lossScore.textContent = score;
+      overlayLoss.showModal();
     }
   }, 1000);
 };
@@ -207,9 +230,25 @@ const stopTimer = () => {
 };
 
 //moves
-
+const updateMoves = () => {
+  moves++;
+  movesDisplay.textContent = moves;
+  // console.log(updateMoves);
+};
 //score
+const updateScore = () => {
+  consecutiveMatches++;
 
+  let points = GameData.scoringRules.pointPerMatch;
+
+  if (consecutiveMatches > 1) {
+    points = points * GameData.scoringRules.comboMultiplier;
+    // console.log("Combo! 2X points");
+  }
+  score += points;
+  scoreDisplay.textContent = score;
+  // console.log(updateScore);
+};
 //
 /*----------------------------win/loss condition----------------------------*/
 
@@ -237,6 +276,9 @@ btnHow.addEventListener("click", () => {
 });
 btnCloseHow.addEventListener("click", () => {
   overlayHow.close();
+});
+btnHowHeader.addEventListener("click", () => {
+  overlayHow.showModal();
 });
 
 //? Button Triggers:

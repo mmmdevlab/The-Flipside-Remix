@@ -193,6 +193,12 @@ button,
   text-align: center;
 }
 
+#instructions-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* .logo-lockup { */
 /* Backup - style if image is broken! */
 /* left: 50%; */
@@ -214,9 +220,11 @@ button,
   position: absolute;
   right: 24px;
   top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .mode-toggle-btn {
-  position: absolute;
   background-color: var(--black);
   border: 2px solid #1db954;
   border-radius: 50%;

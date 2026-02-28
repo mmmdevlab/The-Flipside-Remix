@@ -110,3 +110,8 @@ export const buttonMenu = {
     { id: "share", text: "Share" },
   ],
 };
+
+export const scoringRules = {
+  pointPerMatch: 10,
+  comboMultiplier: 2,
+};
