@@ -318,6 +318,10 @@ button:hover {
   align-items: center;
 }
 
+.btn-reset:hover {
+  background-color: var(--green-dark);
+}
+
 .btn-group {
   display: flex;
   flex-direction: column;

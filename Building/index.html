@@ -135,6 +135,7 @@
           <div id="game-grid">
             <!--cards to be created here-->
           </div>
+          <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
           <div class="score-panel">
             <div class="stat-level">
               <span>Level</span>
@@ -158,37 +159,14 @@
               aria-label="Reset Game"
               class="btn-reset"
             >
-              <img src="/Icons/RestartIcon.svg" alt="" class="svg-icon" />
+              <img
+                src="/Icons/RestartIcon.svg"
+                alt="Restart Button"
+                class="svg-icon"
+              />
             </button>
           </div>
         </div>
-        <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
-        <!-- <div class="score-panel">
-          <div class="stat-level">
-            <span>Level</span>
-            <strong class="stat-details" id="level-display">1</strong>
-          </div>
-          <div class="stat-time">
-            <span>Time</span
-            ><strong class="stat-details" id="timer-display">00:30</strong>
-          </div>
-          <div class="stat-score">
-            <span>Score</span
-            ><strong class="stat-details" id="score-display">0</strong>
-          </div>
-          <div class="stat-moves">
-            <span>Moves</span
-            ><strong class="stat-details" id="moves-display">0</strong>
-          </div>
-          <button
-            id="btn-reset"
-            title="Reset Game"
-            aria-label="Reset Game"
-            class="btn-reset"
-          >
-            <img src="/Icons/RestartIcon.svg" alt="" class="svg-icon" />
-          </button>
-        </div> -->
       </section>
     </main>
     <!----------------------------------------------- OVERLAY - Instructions -->
@@ -236,10 +214,11 @@
       aria-labelledby="win-title"
     >
       <div class="overlay-content">
-        <h2 id="win-title">Level Cleared!</h2>
+        <h4 id="win-level"></h4>
+        <h2 id="win-title">You Won, <span id="win-player-name"></span>!</h2>
         <div class="overlay-stats">
-          <p>Pairs matched: <span id="win-pairs"></span></p>
-          <p>Score this level: <span id="win-score"></span></p>
+          <p>Score: <span id="win-score"></span></p>
+          <p>Moves: <span id="win-moves"></span></p>
         </div>
         <button id="btn-next-level" class="btn-primary">Next Level</button>
       </div>
@@ -252,9 +231,11 @@
       aria-labelledby="loss-title"
     >
       <div class="overlay-content">
-        <h2 id="loss-title">Game Over</h2>
+        <h4 id="loss-level"></h4>
+        <h2 id="loss-title">Game Over, <span id="loss-player-name"></span>!</h2>
         <div class="overlay-stats">
           <p>Score: <span id="loss-score"></span></p>
+          <p>Moves: <span id="loss-moves"></span></p>
         </div>
         <button id="btn-try-again" class="btn-primary">Try Again</button>
       </div>
@@ -267,13 +248,15 @@
       aria-labelledby="complete-title"
     >
       <div class="overlay-content">
-        <h2 id="complete-title">Game Complete!</h2>
+        <h2 id="complete-title">
+          Victory,<br />Congratulations <span id="complete-player-name"></span>!
+        </h2>
         <h3 id="complete-subtitle"></h3>
         <div class="overlay-stats">
-          <p>Total Score:<span id="complete-score"></span></p>
-          <p>Score Percentage: <span id="complete-percentage"></span></p>
+          <p>Total Score: <span id="complete-score"></span></p>
+          <p>Total Moves : <span id="complete-moves"></span></p>
         </div>
-        <button type="button" id="btn-show-persona" class="btn-primary">
+        <button type="button" id="btn-show-results" class="btn-primary">
           Show Results
         </button>
       </div>

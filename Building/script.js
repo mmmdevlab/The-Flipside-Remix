@@ -22,55 +22,56 @@ let secondCard = null;
 let lockBoard = false;
 
 let consecutiveMatches = 0;
+let matchedPairs = 0;
 
 /*------------------------ Cached Element References ------------------------*/
 
 const screenStart = document.getElementById("screen-start");
-// console.log("start Screen", screenStart);
 const screenGame = document.getElementById("screen-game");
-// console.log("Game Screen", screenGame);
 const gameGrid = document.getElementById("game-grid");
-//console.log("grid")
 
 const inputName = document.getElementById("playerName");
-// console.log("input", inputName);
 const btnPlay = document.getElementById("btn-play");
-// console.log("play button", btnPlay);
 const btnHow = document.getElementById("btn-how");
-// console.log("how to play button", btnHow);
 
 const btnHowHeader = document.getElementById("btn-how-header");
+const btnReset = document.getElementById("btn-reset");
+
+const btnTryAgain = document.getElementById("btn-try-again");
+const btnNextLevel = document.getElementById("btn-next-level");
 
 const overlayHow = document.getElementById("overlay-instructions");
-// console.log(overlayHow);
 const btnCloseHow = document.getElementById("btn-close-instructions");
-// console.log(btnCloseHow);
 
 const levelDisplay = document.getElementById("level-display");
-console.log(levelDisplay);
 const timerDisplay = document.getElementById("timer-display");
-console.log(timerDisplay);
 const scoreDisplay = document.getElementById("score-display");
-console.log(scoreDisplay);
 const movesDisplay = document.getElementById("moves-display");
-console.log(movesDisplay);
 
 const overlayLoss = document.getElementById("overlay-loss");
-console.log(overlayLoss);
 const lossScore = document.getElementById("loss-score");
-console.log(lossScore);
+const lossMoves = document.getElementById("loss-moves");
+const winLevel = document.getElementById("win-level");
+const winPlayerName = document.getElementById("win-player-name");
 
 const overlayWin = document.getElementById("overlay-win");
-console.log(overlayWin);
 const winScore = document.getElementById("win-score");
-console.log(winScore);
+const winMoves = document.getElementById("win-moves");
+const lossLevel = document.getElementById("loss-level");
+const lossPlayerName = document.getElementById("loss-player-name");
 
-//? Grab all the Screens (victory (all levels complete overlay, persona overlay))
+const overlayVictory = document.getElementById("overlay-complete");
+const completePlayerName = document.getElementById("complete-player-name");
+const completeScore = document.getElementById("complete-score");
+const completeMoves = document.getElementById("complete-moves");
+const overlayResults = document.getElementById("overlay-persona");
+const btnShowResults = document.getElementById("btn-show-results");
+
 //? one thing to add on which i forgot - before the level game start i wanted to pop up stating the time they have to complete the level overlay.
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
-/*----------------------------shuffle function----------------------------*/
+/*shuffle function----------------------------*/
 const shuffle = (array) => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -80,13 +81,13 @@ const shuffle = (array) => {
   return newArray;
 };
 
-/*----------------------------flip card----------------------------*/
+/*flip card----------------------------*/
 const flipCard = (event) => {
   const card = event.target.closest(".card");
   if (lockBoard) return;
 
   if (timerInterval === null) {
-    console.log("First card clicked! Starting the countdown");
+    // console.log("First card clicked! Starting the countdown");
     startCountdown(timeLeft);
   }
 
@@ -105,7 +106,7 @@ const flipCard = (event) => {
   checkForMatch();
 };
 
-/*----------------------------check for match----------------------------*/
+/*check for match----------------------------*/
 const checkForMatch = () => {
   if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
     // console.log("matched", firstCard.dataset.pairId); // print match
@@ -114,8 +115,9 @@ const checkForMatch = () => {
     firstCard = null;
     secondCard = null;
     lockBoard = false;
-
+    matchedPairs++;
     updateScore();
+    checkWin();
   } else {
     // console.log("no match", firstCard.dataset.pairId); // print no match
     consecutiveMatches = 0;
@@ -129,10 +131,10 @@ const checkForMatch = () => {
   }
 
   updateMoves();
-  console.log("moves:", moves); // print the moves count
+  // console.log("moves:", moves); // print the moves count
 };
 
-/*----------------------------render the board----------------------------*/
+/*render the board----------------------------*/
 const renderBoard = (cards, level) => {
   gameGrid.innerHTML = "";
   gameGrid.style.gridTemplateColumns = `repeat(${level.cols}, 1fr)`;
@@ -167,7 +169,7 @@ const renderBoard = (cards, level) => {
   });
 };
 
-/*----------------------------start the game----------------------------*/
+/*start the game----------------------------*/
 const startGame = () => {
   const typedName = inputName.value.trim();
   if (typedName !== "") {
@@ -187,8 +189,13 @@ const startGame = () => {
   // console.log(currentLevel);
   timeLeft = level.timeLimit;
   timerDisplay.textContent = timeLeft;
+  stopTimer();
   timerInterval = null;
-  console.log(`You have ${timeLeft} seconds to complete this level`);
+  matchedPairs = 0;
+  consecutiveMatches = 0;
+  score = 0;
+  scoreDisplay.textContent = 0;
+  // console.log(`You have ${timeLeft} seconds to complete this level`);
 
   const cards = [];
 
@@ -203,9 +210,65 @@ const startGame = () => {
 
   moves = 0;
   movesDisplay.textContent = moves;
+  levelDisplay.textContent = currentLevel + 1;
 };
 
-/*----------------------------score panel----------------------------*/
+const nextLevel = () => {
+  if (currentLevel + 1 >= GameData.levels.length) {
+    overlayWin.close();
+    overlayVictory.showModal();
+    return;
+  }
+  currentLevel++;
+  overlayWin.close();
+  startGame();
+};
+
+/*win&loss condition----------------------------*/
+const checkWin = () => {
+  const totalPairs = GameData.levels[currentLevel].matchPairs.length;
+  if (matchedPairs === totalPairs) {
+    stopTimer();
+
+    if (currentLevel + 1 >= GameData.levels.length) {
+      showVictory();
+    } else {
+      showWin();
+    }
+  }
+};
+
+const showWin = () => {
+  winPlayerName.textContent = playerName;
+  winLevel.textContent = `Level ${currentLevel + 1}`;
+  winScore.textContent = score;
+  winMoves.textContent = moves;
+  overlayWin.showModal();
+};
+
+const showLoss = () => {
+  lossPlayerName.textContent = playerName;
+  lossLevel.textContent = `Level ${currentLevel + 1}`;
+  lossScore.textContent = score;
+  lossMoves.textContent = moves;
+  overlayLoss.showModal();
+};
+
+/*score panel----------------------------*/
+
+const resetGame = () => {
+  if (overlayWin.open) overlayWin.close();
+  if (overlayLoss.open) overlayLoss.close();
+
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+
+  startGame();
+};
+
+/*stats update----------------------------*/
+
 //timer
 const startCountdown = (seconds) => {
   timeLeft = seconds;
@@ -218,10 +281,8 @@ const startCountdown = (seconds) => {
 
     if (timeLeft <= 0) {
       stopTimer();
-      // console.log("GameOver"); // update with my dialog loss overlay
       lockBoard = true;
-      lossScore.textContent = score;
-      overlayLoss.showModal();
+      showLoss();
     }
   }, 1000);
 };
@@ -249,13 +310,17 @@ const updateScore = () => {
   scoreDisplay.textContent = score;
   // console.log(updateScore);
 };
-//
-/*----------------------------win/loss condition----------------------------*/
+//victory
+const showVictory = () => {
+  completePlayerName.textContent = playerName;
+  completeScore.textContent = score;
+  completeMoves.textContent = moves;
+  overlayVictory.showModal();
+};
 
 // to add a stoptimer() when a win happens before the time runs out
 
-/*----------------------------stats update----------------------------*/
-/*----------------------------mid-game shuffle feature----------------------------*/
+/*mid-game shuffle feature----------------------------*/
 
 //? add audio object [cardClick, correctMatch, winLevelSound, lossLevelSound,]
 //? help function called playSound to trigger when interacted -
@@ -281,5 +346,15 @@ btnHowHeader.addEventListener("click", () => {
   overlayHow.showModal();
 });
 
-//? Button Triggers:
-//? Board Triggers:
+btnReset.addEventListener("click", resetGame);
+
+btnTryAgain.addEventListener("click", () => {
+  overlayLoss.close();
+  resetGame();
+});
+btnNextLevel.addEventListener("click", nextLevel);
+
+btnShowResults.addEventListener("click", () => {
+  overlayVictory.close();
+  overlayResults.showModal();
+});
