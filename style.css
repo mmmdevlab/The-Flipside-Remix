@@ -3,6 +3,10 @@
 :root {
   --green: #1ed760;
   --green-dark: #007c2c;
+  --baby-blue: #42e0ff;
+  --baby-darkblue: #00c4eb;
+  --orange: #ffa742;
+  --dark-orange: #ff8800;
   --black: #000000;
   --white: #ffffff;
   --dark-grey: #1a1a1a;
@@ -67,7 +71,7 @@ h4,
   letter-spacing: 0.1em;
 }
 
-.p1 {
+.p {
   font-size: 21px;
   font-weight: 400; /* Regular */
   line-height: 1.2;
@@ -108,22 +112,6 @@ button,
 
 /*----------------------------------------LAYOUT */
 
-/* .flex-parent {
-  background-color: black;
-  display: flex;
-  height: 600px;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.flex-child {
-  font-size: 48px;
-  height: 100px;
-  width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
-/* } */
 /*---------------------------------------- Background*/
 .background-image {
   position: fixed;
@@ -150,7 +138,6 @@ button,
   max-width: 960px;
   margin: 0 auto;
   padding: 40px 16px;
-  /* gap: 40px; */
   flex-grow: 1;
 }
 
@@ -198,23 +185,6 @@ button,
   align-items: center;
   gap: 8px;
 }
-
-/* .logo-lockup { */
-/* Backup - style if image is broken! */
-/* left: 50%; */
-/* top: 50%; */
-/* transform: translate(-50%, -50%); */
-/* height: 60px; */
-/* font-family: "Inter", sans-serif; */
-/* font-weight: 700; */
-/* color: #ffffff; */
-/* display: flex; */
-/* text-transform: uppercase; */
-/* justify-content: center; */
-/* flex-direction: column; */
-/* margin-bottom: 8px; */
-/* position: relative; */
-/* } */
 
 .header-actions {
   position: absolute;
@@ -287,6 +257,7 @@ button {
   background-color: var(--green);
   color: var(--black);
   width: 200px;
+  border-color: var(--green);
 }
 
 /*----------------------------------------SECONDARY BUTTON */
@@ -299,13 +270,17 @@ button {
 /*----------------------------------------HOVER BUTTON */
 button:hover {
   transform: translateY(-2px);
+  color: var(--white);
+  border-color: var(--green);
 }
 .btn-primary:hover {
   background-color: var(--green-dark);
+  border-color: var(--green-dark);
 }
 .btn-secondary:hover {
   background-color: var(--green);
   color: var(--black);
+  border-color: var(--green);
 }
 
 .btn-reset {
@@ -344,6 +319,7 @@ button:hover {
   display: block;
   text-align: center;
   margin-bottom: 8px;
+  line-height: 1.2;
 }
 #playerName {
   width: 100%;
@@ -356,6 +332,7 @@ button:hover {
   margin-bottom: 15px;
   color: var(--black);
   background-color: var(--white);
+  line-height: 1.2;
 }
 
 /*----------------------------------------Screens & Visibility*/
@@ -373,7 +350,7 @@ button:hover {
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--green-dark);
   backdrop-filter: blur(8px);
   justify-content: center;
   align-items: center;
@@ -387,7 +364,7 @@ button:hover {
 }
 
 .overlay::backdrop {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: var(--green-dark);
   backdrop-filter: blur(1px);
   background: transparent;
 }
@@ -408,7 +385,7 @@ button:hover {
 
 .overlay-stats {
   background: var(--black);
-  padding: 20px;
+  padding: 40px;
   border-radius: 12px;
   margin: 10px 0;
 }
@@ -421,6 +398,7 @@ button:hover {
 .overlay-content li {
   margin-bottom: 12px;
   font-size: 14px;
+  line-height: 1.2;
 }
 
 .overlay-content li strong {
@@ -434,6 +412,21 @@ button:hover {
   display: flex;
   gap: 12;
 }
+#start-time-limit {
+  color: var(--green);
+  font-weight: inherit;
+}
+
+#overlay-level-start .overlay-content {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.4s ease;
+}
+
+#overlay-level-start[open] .overlay-content {
+  opacity: 1;
+  transform: scale(1);
+}
 
 dialog {
   border: none;
@@ -446,7 +439,7 @@ dialog {
 
 dialog::backdrop {
   background-color: var(--black);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(1px);
 }
 
 dialog.overlay {
@@ -491,6 +484,7 @@ dialog[open] {
   display: flex;
   gap: 8px;
 }
+
 .match-pair img {
   width: 100px;
   height: 100px;
@@ -536,10 +530,12 @@ dialog[open] {
   font-size: 12px;
   text-transform: uppercase;
   color: var(--green);
+  line-height: 1.2;
 }
 .stat-details {
   font-size: 24px;
   font-weight: 700;
+  line-height: 1.2;
 }
 /*----------------------------------------Persona Template Styling*/
 .persona-card {
@@ -557,11 +553,6 @@ dialog[open] {
   margin: 10px 0;
 }
 
-.persona-title-display {
-  color: var(--green);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
 .persona-description {
   color: var(--text-muted);
   font-size: 14px;
@@ -624,4 +615,27 @@ dialog[open] {
   width: 40%;
   height: auto;
   color: var(--green);
+}
+
+.card-artist .card-back {
+  background-color: var(--baby-blue);
+  border-color: var(--baby-darkblue);
+  color: var(--black);
+}
+
+.card-title .card-back {
+  background-color: var(--orange);
+  border-color: var(--dark-orange);
+  color: var(--black);
+}
+
+.card.matched .card-back {
+  background-color: var(--green-dark);
+  border-color: var(--green);
+  color: var(--white); /* keeps text white */
+  opacity: 1; /* stays visible */
+}
+
+.card.matched {
+  cursor: default; /* no pointer cursor — card is done */
 }

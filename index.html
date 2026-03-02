@@ -111,7 +111,7 @@
         </div>
 
         <!----------------------------------------------- SCREEN 1: Player name input + action buttons -->
-        <div class="setup-form">
+        <form id="start-form" class="setup-form">
           <label for="playerName">Player Name</label>
           <input
             id="playerName"
@@ -122,16 +122,11 @@
           />
           <div class="btn-group">
             <button id="btn-play" class="btn-primary">Play Game</button>
-            <button
-              id="btn-how"
-              class="btn-secondary"
-              aria-expanded="false"
-              aria-controls="overlay-instructions"
-            >
+            <button type="button" id="btn-how" class="btn-secondary">
               How To Play
             </button>
           </div>
-        </div>
+        </form>
       </section>
       <!----------------------------------------------- SCREEN 2: GAME SCREEN -->
       <section id="screen-game" class="screen hidden">
@@ -210,6 +205,22 @@
         </button>
       </div>
     </dialog>
+    <!----------------------------------------------- OVERLAY - level-start -->
+    <dialog id="overlay-level-start" class="overlay">
+      <div class="overlay-content">
+        <h4 id="start-level-name">Level 1</h4>
+        <div class="overlay-stats">
+          <h2>
+            You have <strong id="start-time-limit"></strong> seconds to complete
+            this level
+          </h2>
+        </div>
+        <h4 id="start-level-title">
+          Good Luck, <span id="start-player-name"></span> 🍀
+        </h4>
+      </div>
+    </dialog>
+
     <!----------------------------------------------- OVERLAY — WIN -->
     <dialog
       id="overlay-win"
@@ -221,7 +232,8 @@
         <h4 id="win-level"></h4>
         <h2 id="win-title">You Won, <span id="win-player-name"></span>!</h2>
         <div class="overlay-stats">
-          <p>Score: <span id="win-score"></span></p>
+          <p>Time saved: <span id="win-time"></span>sec</p>
+          <p>Level Score: <span id="win-score"></span></p>
           <p>Moves: <span id="win-moves"></span></p>
         </div>
         <button id="btn-next-level" class="btn-primary">Next Level</button>
@@ -259,6 +271,9 @@
         <div class="overlay-stats">
           <p>Total Score: <span id="complete-score"></span></p>
           <p>Total Moves : <span id="complete-moves"></span></p>
+          <p>
+            Total Time Saved: <span id="complete-time-saved">0</span> seconds
+          </p>
         </div>
         <button type="button" id="btn-show-results" class="btn-primary">
           Show Results
@@ -273,7 +288,7 @@
       aria-labelledby="result-title"
     >
       <div class="overlay-content">
-        <h2 id="result-title">🎧 Discover Your Sound Persona</h2>
+        <h2 id="result-title">🎧 Your Sound Persona</h2>
         <div id="results-points"></div>
         <div class="overlay-actions">
           <!-- <button type="button" id="download-btn" class="btn-primary">
