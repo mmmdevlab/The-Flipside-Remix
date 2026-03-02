@@ -76,14 +76,15 @@ link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 
 **The Beat Devotee**
 
-- score -> 60% - 80%
+- score -> 60% - 79%
 
 **The Rhythm Rover**
 
-- score -> 40% - 60%
+- score -> 40% - 59%
 
 **The Silent Mode Starter**
-s- core -> 0% - 40%
+
+- score -> 0% - 39%
 
 ### Approach to Development
 
@@ -164,6 +165,6 @@ s- core -> 0% - 40%
 - Win screen renders in HTML
 - Loss screen renders in HTML
 - Restart button resets everything cleanly
-- End of all 3 levels reveal persona (because we need enough score to identify)
+- End of all 3 levels reveal persona as results (because we need enough score to identify)
 
 ### References

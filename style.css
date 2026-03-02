@@ -1,0 +1,623 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/*----------------------------------------The "Root" & Reset*/
+:root {
+  --green: #1ed760;
+  --green-dark: #007c2c;
+  --black: #000000;
+  --white: #ffffff;
+  --dark-grey: #1a1a1a;
+  --light-grey: #282828;
+  --text-muted: #cccccc;
+  --radius: 500px;
+}
+
+/*----------------------------------------RESET */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*----------------------------------------Typography*/
+h1,
+.h1 {
+  font-size: 42px;
+  font-weight: 700; /* Bold */
+  line-height: 1.2;
+}
+
+h2,
+.h2 {
+  font-size: 32px;
+  font-weight: 700; /* Light */
+  line-height: 1.2;
+}
+
+h3,
+.h3 {
+  font-size: 28px;
+  font-weight: 500; /* Medium */
+  line-height: 1.2;
+}
+
+h4,
+.h4 .overlay-content h4 {
+  font-size: 24px;
+  font-weight: 500; /* Medium */
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.p1 {
+  font-size: 21px;
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p2 {
+  font-size: 18px;
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p2-bold {
+  font-size: 18px;
+  font-weight: 700; /* Bold */
+  line-height: 1.2;
+}
+
+.p3 {
+  font-size: 14px;
+  font-weight: 400; /* Regular */
+  line-height: 1.2;
+}
+
+.p4 {
+  font-size: 12px;
+  font-weight: 700; /* Bold */
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+button,
+.button {
+  font-size: 18px;
+  font-weight: 700; /* Bold */
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/*----------------------------------------LAYOUT */
+
+/* .flex-parent {
+  background-color: black;
+  display: flex;
+  height: 600px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-child {
+  font-size: 48px;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+/* } */
+/*---------------------------------------- Background*/
+.background-image {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+/*---------------------------------------- game screen layouts*/
+
+.board-container {
+  display: grid;
+  gap: 20px;
+}
+#game-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 16px;
+  /* gap: 40px; */
+  flex-grow: 1;
+}
+
+#game-grid {
+  display: grid;
+  height: auto;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+/*----------------------------------------The Header & Toggle */
+
+.site-header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 60px 20px 0px;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  height: 60px;
+  margin-bottom: 8px;
+}
+.tagline {
+  font-size: 21px;
+  font-weight: 500;
+  text-align: center;
+}
+
+#instructions-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* .logo-lockup { */
+/* Backup - style if image is broken! */
+/* left: 50%; */
+/* top: 50%; */
+/* transform: translate(-50%, -50%); */
+/* height: 60px; */
+/* font-family: "Inter", sans-serif; */
+/* font-weight: 700; */
+/* color: #ffffff; */
+/* display: flex; */
+/* text-transform: uppercase; */
+/* justify-content: center; */
+/* flex-direction: column; */
+/* margin-bottom: 8px; */
+/* position: relative; */
+/* } */
+
+.header-actions {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mode-toggle-btn {
+  background-color: var(--black);
+  border: 2px solid #1db954;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 24px;
+  top: 24px;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.mode-toggle-btn:hover {
+  transform: scale(1.05);
+  background-color: var(--green);
+  box-shadow: 0 0 10px rgba(12, 78, 35, 0.5);
+}
+
+/* ----------------------------------------The Icon inside the button */
+.icon-visual {
+  width: 22px;
+  height: 22px;
+  background-color: #ffffff;
+  -webkit-mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
+  mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  transition:
+    background-color 0.3s ease,
+    transform 0.4s ease;
+}
+
+.svg-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/*----------------------------------------BASE BUTTON - for all buttons */
+button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: var(--radius);
+  padding: 18px 32px;
+  transition: all 0.2s ease;
+  border: 2px solid;
+}
+
+/*----------------------------------------PRIMARY BUTTON */
+.btn-primary {
+  background-color: var(--green);
+  color: var(--black);
+  width: 200px;
+}
+
+/*----------------------------------------SECONDARY BUTTON */
+.btn-secondary {
+  background-color: var(--black);
+  color: var(--white);
+  border: 2px solid var(--green);
+  width: 200px;
+}
+/*----------------------------------------HOVER BUTTON */
+button:hover {
+  transform: translateY(-2px);
+}
+.btn-primary:hover {
+  background-color: var(--green-dark);
+}
+.btn-secondary:hover {
+  background-color: var(--green);
+  color: var(--black);
+}
+
+.btn-reset {
+  background-color: var(--green);
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-reset:hover {
+  background-color: var(--green-dark);
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+/*----------------------------------------Forms*/
+.setup-form {
+  width: 100%;
+  max-width: 200px;
+}
+.setup-form label {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  text-align: center;
+  margin-bottom: 8px;
+}
+#playerName {
+  width: 100%;
+  height: 60px;
+  border-radius: var(--radius);
+  border: none;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+/*----------------------------------------Screens & Visibility*/
+.screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hidden {
+  display: none !important;
+}
+
+/*----------------------------------------Overlays (Unified)*/
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  text-align: left;
+  display: flex;
+}
+
+.overlay::backdrop {
+  background-color: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(1px);
+  background: transparent;
+}
+
+.overlay-content {
+  background-color: var(--dark-grey);
+  border: 2px solid var(--green);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.overlay-stats {
+  background: var(--black);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+.overlay-content ul {
+  text-align: center;
+  list-style: none;
+  margin: 10px 0;
+}
+.overlay-content li {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.overlay-content li strong {
+  color: var(--green);
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+dialog::backdrop {
+  background-color: var(--black);
+  backdrop-filter: blur(8px);
+}
+
+dialog.overlay {
+  display: none;
+  justify-content: center;
+  position: fixed;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  inset: 0;
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+}
+dialog[open] {
+  display: flex;
+  justify-content: center;
+}
+
+.persona-label {
+  display: flex;
+  color: var(--white);
+  align-content: center;
+}
+.persona-message {
+  display: flex;
+  color: var(--white);
+  align-content: center;
+}
+
+/*----------------------------------------Match Examples*/
+#match-examples {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.match-pair {
+  position: relative;
+  display: flex;
+  gap: 8px;
+}
+.match-pair img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  border: 2px solid var(--green);
+}
+
+.check-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--green);
+  color: black;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+}
+
+/*----------------------------------------Game Stats Panel*/
+.score-panel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid var(--green);
+  padding: 15px 25px;
+  border-radius: 12px;
+  background: var(--black);
+}
+
+.stat {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+.stat span {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.stat-details {
+  font-size: 24px;
+  font-weight: 700;
+}
+/*----------------------------------------Persona Template Styling*/
+.persona-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.persona-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+
+.persona-title-display {
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.persona-description {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/*-----------------------------------------Cards*/
+
+.card {
+  position: relative;
+  width: 100px;
+  aspect-ratio: 1;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--green);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.card-front {
+  background-color: var(--dark-grey);
+  z-index: 2;
+}
+
+.card-back {
+  background-color: var(--green-dark);
+  color: var(--white);
+  padding: 8px;
+  font-size: 14px;
+  text-align: center;
+  z-index: 1;
+  opacity: 0;
+}
+
+.card.flipped .card-front {
+  opacity: 0;
+}
+
+.card.flipped .card-back {
+  opacity: 1;
+}
+
+.card:hover:not(.flipped) .card-front {
+  border-color: var(--white);
+}
+.card-front svg {
+  width: 40%;
+  height: auto;
+  color: var(--green);
+}

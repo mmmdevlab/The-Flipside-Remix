@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="/Icons/MusicIcon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>The Flipside Remix</title>
+  </head>
+
+  <body>
+    <!--my background -->
+    <img
+      src="/Assets/Background.svg"
+      alt=""
+      aria-hidden="true"
+      class="background-image"
+    />
+    <!----------------------------------------------- HEADER - Logo Lockup-->
+    <header class="site-header">
+      <div class="header-center">
+        <div class="logo-lockup">
+          <img
+            src="/Assets/Game-Lockup.svg"
+            alt="The Flipside Remix"
+            class="logo"
+          />
+        </div>
+        <p class="tagline">Beat the clock. Match the cards.</p>
+      </div>
+      <div class="header-actions">
+        <button
+          id="mode-toggle"
+          aria-label="Toggle Light/Dark Mode"
+          class="mode-toggle-btn"
+        >
+          <span class="icon-visual"
+            ><img
+              src="Icons/Lightmode.svg"
+              alt="Light mode icon"
+              class="svg-icon"
+            />
+          </span>
+        </button>
+        <button
+          id="btn-how-header"
+          aria-label="How to Play"
+          class="mode-toggle-btn"
+          aria-controls="overlay-instructions"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="#ffffff"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!----------------------------------------------- MAIN GAME CONTAINER -->
+    <main id="game-container">
+      <!----------------------------------------------- SCREEN 1: START SCREEN -->
+      <section id="screen-start" class="screen">
+        <!----------------------------------------------- SCREEN 1: matched pair examples -->
+        <div id="match-examples">
+          <div class="match-pair">
+            <img
+              src="/Matches/match1/Get_Lucky.jpg"
+              alt="Get Lucky album art (Song)"
+            />
+            <img src="/Matches/match1/daft punk.png" alt="Daft Punk (Artist)" />
+            <span class="check-badge">✓</span>
+          </div>
+
+          <div class="match-pair">
+            <img src="/Matches/match3/Sorry.png" alt="Sorry album art (Song)" />
+            <img
+              src="/Matches/match3/justin bieber.jpeg"
+              alt="Justin Bieber (Artist)"
+            />
+            <span class="check-badge">✓</span>
+          </div>
+
+          <div class="match-pair">
+            <img
+              src="/Matches/match2/Take_me_to_Church.png"
+              alt="Take Me To Church album art (Song)"
+            />
+            <img src="/Matches/match2/Hozier.jpg" alt="Hozier (Artist)" />
+            <span class="check-badge">✓</span>
+          </div>
+        </div>
+
+        <!----------------------------------------------- SCREEN 1: Player name input + action buttons -->
+        <div class="setup-form">
+          <label for="playerName">Player Name</label>
+          <input
+            id="playerName"
+            type="text"
+            placeholder="Name"
+            maxlength="12"
+            autocomplete="off"
+          />
+          <div class="btn-group">
+            <button id="btn-play" class="btn-primary">Play Game</button>
+            <button
+              id="btn-how"
+              class="btn-secondary"
+              aria-expanded="false"
+              aria-controls="overlay-instructions"
+            >
+              How To Play
+            </button>
+          </div>
+        </div>
+      </section>
+      <!----------------------------------------------- SCREEN 2: GAME SCREEN -->
+      <section id="screen-game" class="screen hidden">
+        <div class="board-container">
+          <div id="game-grid">
+            <!--cards to be created here-->
+          </div>
+          <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
+          <div class="score-panel">
+            <div class="stat-level">
+              <span>Level</span>
+              <strong class="stat-details" id="level-display">1</strong>
+            </div>
+            <div class="stat-time">
+              <span>Time</span
+              ><strong class="stat-details" id="timer-display">00:30</strong>
+            </div>
+            <div class="stat-score">
+              <span>Score</span
+              ><strong class="stat-details" id="score-display">0</strong>
+            </div>
+            <div class="stat-moves">
+              <span>Moves</span
+              ><strong class="stat-details" id="moves-display">0</strong>
+            </div>
+            <button
+              id="btn-reset"
+              title="Reset Game"
+              aria-label="Reset Game"
+              class="btn-reset"
+            >
+              <img
+                src="/Icons/RestartIcon.svg"
+                alt="Restart Button"
+                class="svg-icon"
+              />
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!----------------------------------------------- OVERLAY - Instructions -->
+    <dialog
+      id="overlay-instructions"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="instructions-title"
+    >
+      <div class="overlay-content">
+        <h4 id="instructions-title">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="#1ed760"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"
+            ></path></svg
+          >How to Play
+        </h4>
+        <ul>
+          <li>
+            <strong>Flip</strong> Click a card to reveal a <em>Song</em> or
+            <em>Artist.</em>
+          </li>
+          <li><strong>Match</strong> Find the correct pair.</li>
+          <li>
+            <strong>Beat the Clock</strong> Timer starts on your first move.
+          </li>
+          <li><strong>Combo Up</strong> Match quickly to double points.</li>
+        </ul>
+        <button id="btn-close-instructions" class="btn-secondary">
+          Got it!
+        </button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY — WIN -->
+    <dialog
+      id="overlay-win"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="win-title"
+    >
+      <div class="overlay-content">
+        <h4 id="win-level"></h4>
+        <h2 id="win-title">You Won, <span id="win-player-name"></span>!</h2>
+        <div class="overlay-stats">
+          <p>Score: <span id="win-score"></span></p>
+          <p>Moves: <span id="win-moves"></span></p>
+        </div>
+        <button id="btn-next-level" class="btn-primary">Next Level</button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY — LOST-->
+    <dialog
+      id="overlay-loss"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="loss-title"
+    >
+      <div class="overlay-content">
+        <h4 id="loss-level"></h4>
+        <h2 id="loss-title">Game Over, <span id="loss-player-name"></span>!</h2>
+        <div class="overlay-stats">
+          <p>Score: <span id="loss-score"></span></p>
+          <p>Moves: <span id="loss-moves"></span></p>
+        </div>
+        <button id="btn-try-again" class="btn-primary">Try Again</button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY - All Levels completed  -->
+    <dialog
+      id="overlay-complete"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="complete-title"
+    >
+      <div class="overlay-content">
+        <h2 id="complete-title">
+          Victory,<br />Congratulations <span id="complete-player-name"></span>!
+        </h2>
+        <h3 id="complete-subtitle"></h3>
+        <div class="overlay-stats">
+          <p>Total Score: <span id="complete-score"></span></p>
+          <p>Total Moves : <span id="complete-moves"></span></p>
+        </div>
+        <button type="button" id="btn-show-results" class="btn-primary">
+          Show Results
+        </button>
+      </div>
+    </dialog>
+    <!----------------------------------------------- OVERLAY - results show PERSONA  -->
+    <dialog
+      id="overlay-persona"
+      class="overlay"
+      aria-modal="true"
+      aria-labelledby="result-title"
+    >
+      <div class="overlay-content">
+        <h2 id="result-title">🎧 Discover Your Sound Persona</h2>
+        <div id="results-points"></div>
+        <div class="overlay-actions">
+          <!-- <button type="button" id="download-btn" class="btn-primary">
+            Download
+          </button> -->
+          <a
+            href="https://open.spotify.com/playlist/0gprAzUVPPXzIkAMQcfGts?si=eb3148179fb64977"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary"
+            id="btn-spotify"
+          >
+            Remix Playlist </a
+          ><span> </span>
+          <button type="button" id="btn-home" class="btn-secondary">
+            Play Again
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="script.js" type="module" defer></script>
+  </body>
+</html>
