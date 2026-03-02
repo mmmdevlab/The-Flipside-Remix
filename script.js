@@ -14,6 +14,7 @@ let currentLevel = 0;
 let score = 0;
 let totalScore = 0;
 let moves = 0;
+let totalMoves = 0;
 let timer = 0;
 let timeLeft = 0;
 let timerInterval = null;
@@ -264,6 +265,7 @@ const resetGame = () => {
 
   currentLevel = 0;
   totalScore = 0;
+  totalMoves = 0;
 
   firstCard = null;
   secondCard = null;
@@ -309,6 +311,7 @@ const stopTimer = () => {
 //moves
 const updateMoves = () => {
   moves++;
+  totalMoves++;
   movesDisplay.textContent = moves;
   // console.log(updateMoves);
 };
@@ -343,7 +346,7 @@ const maxPossibleScore = () => {
 const showVictory = () => {
   completePlayerName.textContent = playerName;
   completeScore.textContent = totalScore;
-  completeMoves.textContent = moves;
+  completeMoves.textContent = totalMoves;
   overlayVictory.showModal();
 };
 
@@ -376,11 +379,11 @@ const showPersona = () => {
   personaName.classList.add("persona-label");
   personaName.textContent = persona.name;
 
-  const personaMessage = document.createElement("p1");
+  const personaMessage = document.createElement("p");
   personaMessage.classList.add("persona-message");
   personaMessage.textContent = persona.message;
 
-  const personaDescription = document.createElement("p2");
+  const personaDescription = document.createElement("p");
   personaDescription.classList.add("persona-description");
   personaDescription.textContent = persona.description;
 
