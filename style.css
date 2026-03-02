@@ -430,6 +430,10 @@ button:hover {
   text-transform: uppercase;
   line-height: 1.2;
 }
+.overlay-actions {
+  display: flex;
+  gap: 12;
+}
 
 dialog {
   border: none;

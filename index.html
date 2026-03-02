@@ -20,7 +20,8 @@
     <!--my background -->
     <img
       src="./assets/Background.svg"
-      alt=""
+      onerror="this.src = './assets/background.png'"
+      alt="background setting"
       aria-hidden="true"
       class="background-image"
     />
@@ -30,7 +31,8 @@
         <div class="logo-lockup">
           <img
             src="./assets/Game-Lockup.svg"
-            alt="The Flipside Remix"
+            onerror="this.src = './assets/Game-Lockup.png'"
+            alt="The Flipside Remix Logo"
             class="logo"
           />
         </div>
@@ -82,20 +84,17 @@
               src="./matches/match1/Get_Lucky.jpg"
               alt="Get Lucky album art (Song)"
             />
-            <img
-              src="./matches/match1/daft punk.png"
-              alt="Daft Punk (Artist)"
-            />
+            <img src="./matches/match1/daftpunk.png" alt="Daft Punk (Artist)" />
             <span class="check-badge">✓</span>
           </div>
 
           <div class="match-pair">
             <img
-              src="./matches/match3/Sorry.png"
+              src="./matches/match2/Sorry.png"
               alt="Sorry album art (Song)"
             />
             <img
-              src="./matches/match3/justin bieber.jpeg"
+              src="./matches/match2/justinbieber.jpeg"
               alt="Justin Bieber (Artist)"
             />
             <span class="check-badge">✓</span>
@@ -103,10 +102,10 @@
 
           <div class="match-pair">
             <img
-              src="./matches/match2/Take_me_to_Church.png"
+              src="./matches/match3/Take_me_to_Church.png"
               alt="Take Me To Church album art (Song)"
             />
-            <img src="./matches/match2/Hozier.jpg" alt="Hozier (Artist)" />
+            <img src="./matches/match3/Hozier.jpg" alt="Hozier (Artist)" />
             <span class="check-badge">✓</span>
           </div>
         </div>
@@ -287,8 +286,8 @@
             class="btn-primary"
             id="btn-spotify"
           >
-            Remix Playlist </a
-          ><span> </span>
+            Remix Playlist
+          </a>
           <button type="button" id="btn-home" class="btn-secondary">
             Play Again
           </button>
