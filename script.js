@@ -1,8 +1,5 @@
 import * as GameData from "./data.js";
-
-// console.log(GameData.levels);
-// console.log(GameData.personas);
-// console.log(GameData.buttonMenu);
+import { playSound } from "./soundEffects.js";
 
 /*-------------------------------- Constants --------------------------------*/
 
@@ -63,6 +60,7 @@ const winMoves = document.getElementById("win-moves");
 const winLevel = document.getElementById("win-level");
 const winTime = document.getElementById("win-time");
 const winPlayerName = document.getElementById("win-player-name");
+const winBonus = document.getElementById("win-bonus");
 
 const overlayLoss = document.getElementById("overlay-loss");
 const lossScore = document.getElementById("loss-score");
@@ -74,10 +72,10 @@ const overlayVictory = document.getElementById("overlay-complete");
 const completePlayerName = document.getElementById("complete-player-name");
 const completeScore = document.getElementById("complete-score");
 const completeMoves = document.getElementById("complete-moves");
+const completeTimeSaved = document.getElementById("complete-time-saved");
+
 const overlayResults = document.getElementById("overlay-persona");
 const btnShowResults = document.getElementById("btn-show-results");
-
-//? one thing to add on which i forgot - before the level game start i wanted to pop up stating the time they have to complete the level overlay.
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
@@ -96,61 +94,25 @@ const flipCard = (event) => {
   const card = event.target.closest(".card");
   if (lockBoard) return;
   if (card.classList.contains("matched")) return;
+
+  playSound("click");
+
   if (timerInterval === null) {
-    // console.log("First card clicked! Starting the countdown");
     startCountdown(timeLeft);
   }
 
   if (!firstCard) {
     card.classList.add("flipped");
     firstCard = card;
-    // console.log(firstCard.dataset.pairId);
     return;
   }
+
   if (card === firstCard) return;
   card.classList.add("flipped");
   secondCard = card;
-  // console.log(secondCard.dataset.pairId);
   lockBoard = true;
-  // console.log(lockBoard);
+
   checkForMatch();
-};
-
-/*check for match----------------------------*/
-const checkForMatch = () => {
-  if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
-    // console.log("matched", firstCard.dataset.pairId); // print match
-    firstCard.removeEventListener("click", flipCard);
-    secondCard.removeEventListener("click", flipCard);
-
-    const matchedFirst = firstCard;
-    const matchedSecond = secondCard;
-
-    setTimeout(() => {
-      matchedFirst.classList.add("matched");
-      matchedSecond.classList.add("matched");
-    }, 100);
-
-    firstCard = null;
-    secondCard = null;
-    lockBoard = false;
-    matchedPairs++;
-    updateScore();
-    checkWin();
-  } else {
-    // console.log("no match", firstCard.dataset.pairId); // print no match
-    consecutiveMatches = 0;
-    setTimeout(() => {
-      firstCard.classList.remove("flipped");
-      secondCard.classList.remove("flipped");
-      firstCard = null;
-      secondCard = null;
-      lockBoard = false;
-    }, 1000);
-  }
-
-  updateMoves();
-  // console.log("moves:", moves); // print the moves count
 };
 
 /*render the board----------------------------*/
@@ -235,15 +197,43 @@ const startGame = () => {
   }, 2000);
 };
 
-const nextLevel = () => {
-  if (currentLevel + 1 >= GameData.levels.length) {
-    overlayWin.close();
-    overlayVictory.showModal();
-    return;
+/*check for match----------------------------*/
+const checkForMatch = () => {
+  updateMoves();
+
+  if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+    //match
+    matchedPairs++;
+    playSound("match");
+    updateScore();
+
+    firstCard.removeEventListener("click", flipCard);
+    secondCard.removeEventListener("click", flipCard);
+
+    const matchedFirst = firstCard;
+    const matchedSecond = secondCard;
+
+    setTimeout(() => {
+      matchedFirst.classList.add("matched");
+      matchedSecond.classList.add("matched");
+    }, 100);
+
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+
+    checkWin();
+  } else {
+    //no match
+    consecutiveMatches = 0;
+    setTimeout(() => {
+      firstCard.classList.remove("flipped");
+      secondCard.classList.remove("flipped");
+      firstCard = null;
+      secondCard = null;
+      lockBoard = false;
+    }, 1000);
   }
-  currentLevel++;
-  overlayWin.close();
-  startGame();
 };
 
 /*win&loss condition----------------------------*/
@@ -252,17 +242,23 @@ const checkWin = () => {
   if (matchedPairs === totalPairs) {
     stopTimer();
 
-    totalTimeSaved += timeLeft;
-
     const bonus = calEfficiencyBonus();
+    // const baseScore = score;
+
+    winBonus.textContent = `+${bonus}`;
     score += bonus;
-    totalScore += bonus;
+    winScore.textContent = score;
     scoreDisplay.textContent = score;
 
     setTimeout(() => {
       if (currentLevel + 1 >= GameData.levels.length) {
-        showVictory();
+        playSound("victory");
+        totalScore += score;
+        totalMoves += moves;
+        totalTimeSaved += timeLeft;
+        showFinalVictory();
       } else {
+        playSound("winLevel");
         showWin();
       }
     }, 600);
@@ -272,7 +268,6 @@ const checkWin = () => {
 const showWin = () => {
   winPlayerName.textContent = playerName;
   winLevel.textContent = `Level ${currentLevel + 1}`;
-  winScore.textContent = score;
   winMoves.textContent = moves;
   winTime.textContent = timeLeft;
   overlayWin.showModal();
@@ -286,31 +281,42 @@ const showLoss = () => {
   overlayLoss.showModal();
 };
 
+const nextLevel = () => {
+  totalScore += score;
+  totalMoves += moves;
+  totalTimeSaved += timeLeft;
+
+  currentLevel++;
+  overlayWin.close();
+  startGame();
+};
+
 /*score panel----------------------------*/
-
-const resetGame = () => {
-  if (overlayWin.open) overlayWin.close();
-  if (overlayLoss.open) overlayLoss.close();
-
+const resetState = () => {
   currentLevel = 0;
   totalScore = 0;
   totalMoves = 0;
   totalTimeSaved = 0;
-
   firstCard = null;
   secondCard = null;
   lockBoard = false;
+};
 
+const resetGame = () => {
+  if (overlayWin.open) overlayWin.close();
+  if (overlayLoss.open) overlayLoss.close();
+  resetState();
   startGame();
 };
 
 const tryAgain = () => {
   if (overlayLoss.open) overlayLoss.close();
-  totalScore -= score;
 
   firstCard = null;
   secondCard = null;
   lockBoard = false;
+  timerInterval = null;
+  consecutiveMatches = 0;
 
   startGame();
 };
@@ -320,48 +326,56 @@ const tryAgain = () => {
 //timer
 const startCountdown = (seconds) => {
   timeLeft = seconds;
-
   timerDisplay.textContent = timeLeft;
 
   timerInterval = window.setInterval(() => {
     timeLeft--;
     timerDisplay.textContent = timeLeft;
 
+    const levelData = GameData.levels[currentLevel];
+
+    if (levelData.hasShuffle) {
+      if (currentLevel === 1 && timeLeft === 45) {
+        midGameShuffle();
+      }
+      if (currentLevel === 2) {
+        if (timeLeft === 80 || timeLeft === 40) {
+          midGameShuffle();
+        }
+      }
+    }
     if (timeLeft <= 0) {
       stopTimer();
       lockBoard = true;
+      playSound("loss");
       showLoss();
     }
   }, 1000);
 };
+
 const stopTimer = () => {
   window.clearInterval(timerInterval);
+  timerInterval = null;
 };
 
 //moves
 const updateMoves = () => {
   moves++;
-  totalMoves++;
   movesDisplay.textContent = moves;
-  // console.log(updateMoves);
 };
 
 //score
 const updateScore = () => {
   consecutiveMatches++;
-
   let points = GameData.scoringRules.pointPerMatch;
-
   const level = GameData.levels[currentLevel];
 
   if (level.hasCombo && consecutiveMatches > 1) {
     points = points * GameData.scoringRules.comboMultiplier;
-    // console.log("Combo! 2X points");
   }
+
   score += points;
-  totalScore += points;
   scoreDisplay.textContent = score;
-  // console.log(updateScore);
 };
 
 //get total max score
@@ -384,10 +398,9 @@ const maxPossibleScore = () => {
 };
 
 const calEfficiencyBonus = () => {
-  // console.log("scoringRules:", GameData.scoringRules);
-
   const level = GameData.levels[currentLevel];
   const minMoves = level.matchPairs.length;
+
   const extraMoves = moves - minMoves;
   const { efficiencyBonus, efficiencyThresholds } = GameData.scoringRules;
 
@@ -395,37 +408,29 @@ const calEfficiencyBonus = () => {
     return efficiencyBonus.perfect;
   if (extraMoves <= efficiencyThresholds.great) return efficiencyBonus.great;
   if (extraMoves <= efficiencyThresholds.good) return efficiencyBonus.good;
-  // console.log("extraMoves:", extraMoves, "bonus:", 0);
 
   return 0;
 };
 
 //victory
-const showVictory = () => {
+const showFinalVictory = () => {
   completePlayerName.textContent = playerName;
+
+  document.getElementById("complete-level-score").textContent = score;
+  document.getElementById("complete-level-moves").textContent = moves;
+  document.getElementById("complete-level-time").textContent = timeLeft;
+
   completeScore.textContent = totalScore;
   completeMoves.textContent = totalMoves;
-  const completeTimeSaved = document.getElementById("complete-time-saved");
-  if (completeTimeSaved) {
-    completeTimeSaved.textContent = totalTimeSaved;
-  }
+  completeTimeSaved.textContent = totalTimeSaved;
+
   overlayVictory.showModal();
 };
 
 //check score to persona
 const getPersona = (totalScore) => {
-  // console.log("totalScore:", totalScore);
   const maxScore = maxPossibleScore();
   const percentage = (totalScore / maxScore) * 100;
-
-  // console.log(
-  //   "totalScore:",
-  //   totalScore,
-  //   "maxScore:",
-  //   maxScore,
-  //   "percentage:",
-  //   percentage,
-  // );
 
   const sorted = [...GameData.personas].sort(
     (a, b) => b.minPercentage - a.minPercentage,
@@ -443,14 +448,14 @@ const showPersona = () => {
   const personaCard = document.createElement("div");
   personaCard.classList.add("persona-card");
 
+  const personaName = document.createElement("h4");
+  personaName.classList.add("persona-label");
+  personaName.textContent = persona.name;
+
   const personaImg = document.createElement("img");
   personaImg.classList.add("persona-img");
   personaImg.src = persona.img;
   personaImg.alt = persona.name;
-
-  const personaName = document.createElement("h4");
-  personaName.classList.add("persona-label");
-  personaName.textContent = persona.name;
 
   const personaMessage = document.createElement("p");
   personaMessage.classList.add("persona-message");
@@ -470,18 +475,39 @@ const showPersona = () => {
 
 /*mid-game shuffle feature----------------------------*/
 
-//? add audio object [cardClick, correctMatch, winLevelSound, lossLevelSound,]
-//? help function called playSound to trigger when interacted -
+const midGameShuffle = () => {
+  const allCards = Array.from(document.querySelectorAll(".card"));
+
+  const eligibleCards = allCards.filter(
+    (card) =>
+      !card.classList.contains("matched") &&
+      card !== firstCard &&
+      card !== secondCard,
+  );
+  for (let i = eligibleCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    const tempNextSibling = eligibleCards[i].nextSibling;
+    eligibleCards[i].parentNode.insertBefore(
+      eligibleCards[i],
+      eligibleCards[j],
+    );
+    eligibleCards[j].parentNode.insertBefore(eligibleCards[j], tempNextSibling);
+  }
+
+  eligibleCards.forEach((card) => {
+    card.classList.add("shuffling");
+    setTimeout(() => card.classList.remove("shuffling"), 500);
+  });
+};
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-/* adding click to 'PLAY' button */
 startForm.addEventListener("submit", (event) => {
   event.preventDefault();
   startGame();
 });
 
-/* adding click to 'HOW TO PLAY' button  */
 btnHow.addEventListener("click", () => {
   overlayHow.showModal();
 });
@@ -505,8 +531,9 @@ btnShowResults.addEventListener("click", () => {
 
 btnHome.addEventListener("click", () => {
   overlayResults.close();
-  currentLevel = 0;
-  totalScore = 0;
+  resetState();
+  playerName = "Guest";
+  inputName.value = "";
   screenGame.classList.add("hidden");
   screenStart.classList.remove("hidden");
 });

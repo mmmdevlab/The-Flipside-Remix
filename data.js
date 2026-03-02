@@ -5,7 +5,8 @@ export const levels = [
     cols: 4,
     timeLimit: 60,
     totalCards: 12,
-    hasShuffle: true,
+    hasShuffle: false,
+    hasCombo: true,
     matchPairs: [
       { artist: "Bad Bunny", title: "Monaco" },
       { artist: "Billie Eilish", title: "Birds of a Feather" },

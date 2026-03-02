@@ -17,7 +17,6 @@
   </head>
 
   <body>
-    <!--my background -->
     <img
       src="./assets/Background.svg"
       onerror="this.src = './assets/background.png'"
@@ -77,7 +76,6 @@
     <main id="game-container">
       <!----------------------------------------------- SCREEN 1: START SCREEN -->
       <section id="screen-start" class="screen">
-        <!----------------------------------------------- SCREEN 1: matched pair examples -->
         <div id="match-examples">
           <div class="match-pair">
             <img
@@ -110,7 +108,7 @@
           </div>
         </div>
 
-        <!----------------------------------------------- SCREEN 1: Player name input + action buttons -->
+        <!----------------------------------------------- Player name input + action buttons -->
         <form id="start-form" class="setup-form">
           <label for="playerName">Player Name</label>
           <input
@@ -215,9 +213,9 @@
             this level
           </h2>
         </div>
-        <h4 id="start-level-title">
+        <p id="start-level-title">
           Good Luck, <span id="start-player-name"></span> 🍀
-        </h4>
+        </p>
       </div>
     </dialog>
 
@@ -232,9 +230,19 @@
         <h4 id="win-level"></h4>
         <h2 id="win-title">You Won, <span id="win-player-name"></span>!</h2>
         <div class="overlay-stats">
-          <p>Time saved: <span id="win-time"></span>sec</p>
-          <p>Level Score: <span id="win-score"></span></p>
-          <p>Moves: <span id="win-moves"></span></p>
+          <p>
+            Time saved:
+            <span id="win-time" style="color: var(--green)"></span> sec
+          </p>
+          <p>
+            Bonus points:
+            <span id="win-bonus" style="color: var(--green)"></span> pts
+          </p>
+          <p>
+            Level score:
+            <span id="win-score" style="color: var(--green)"></span> pts
+          </p>
+          <p>Moves: <span id="win-moves" style="color: var(--green)"></span></p>
         </div>
         <button id="btn-next-level" class="btn-primary">Next Level</button>
       </div>
@@ -250,8 +258,8 @@
         <h4 id="loss-level"></h4>
         <h2 id="loss-title">Game Over, <span id="loss-player-name"></span>!</h2>
         <div class="overlay-stats">
-          <p>Score: <span id="loss-score"></span></p>
-          <p>Moves: <span id="loss-moves"></span></p>
+          <p>Score: <span id="loss-score" style="color: #ff4444"></span> pts</p>
+          <p>Moves: <span id="loss-moves" style="color: #ff4444"></span></p>
         </div>
         <button id="btn-try-again" class="btn-primary">Try Again</button>
       </div>
@@ -264,16 +272,49 @@
       aria-labelledby="complete-title"
     >
       <div class="overlay-content">
-        <h2 id="complete-title">
+        <h2>
           Victory,<br />Congratulations <span id="complete-player-name"></span>!
         </h2>
-        <h3 id="complete-subtitle"></h3>
-        <div class="overlay-stats">
-          <p>Total Score: <span id="complete-score"></span></p>
-          <p>Total Moves : <span id="complete-moves"></span></p>
-          <p>
-            Total Time Saved: <span id="complete-time-saved">0</span> seconds
-          </p>
+        <div class="overlay-stats-split">
+          <div class="stats-column overlay-stats">
+            <h4>Level 3</h4>
+            <p>
+              Score:
+              <span
+                id="complete-level-score"
+                style="color: var(--green)"
+              ></span>
+              pts
+            </p>
+            <p>
+              Moves:
+              <span
+                id="complete-level-moves"
+                style="color: var(--green)"
+              ></span>
+            </p>
+            <p>
+              Time Left:
+              <span id="complete-level-time" style="color: var(--green)"></span>
+              sec
+            </p>
+          </div>
+          <div class="stats-column overlay-stats">
+            <h4>All Levels</h4>
+            <p>
+              Total Score:
+              <span id="complete-score" style="color: var(--green)"></span> pts
+            </p>
+            <p>
+              Total Moves:
+              <span id="complete-moves" style="color: var(--green)"></span>
+            </p>
+            <p>
+              Total Time Saved:
+              <span id="complete-time-saved" style="color: var(--green)"></span>
+              sec
+            </p>
+          </div>
         </div>
         <button type="button" id="btn-show-results" class="btn-primary">
           Show Results
@@ -304,7 +345,7 @@
             Remix Playlist
           </a>
           <button type="button" id="btn-home" class="btn-secondary">
-            Play Again
+            Back Home
           </button>
         </div>
       </div>
