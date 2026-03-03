@@ -12,10 +12,10 @@
   --dark-grey: #1a1a1a;
   --light-grey: #282828;
   --text-muted: #cccccc;
+  --red: #ff4444;
   --radius: 500px;
 }
 
-/*----------------------------------------RESET */
 *,
 *::before,
 *::after {
@@ -40,32 +40,32 @@ body {
   align-items: center;
 }
 
-/*----------------------------------------Typography*/
 h1,
 .h1 {
   font-size: 42px;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   line-height: 1.2;
 }
 
 h2,
 .h2 {
   font-size: 32px;
-  font-weight: 700; /* Light */
+  font-weight: 700;
   line-height: 1.2;
 }
 
 h3,
 .h3 {
   font-size: 28px;
-  font-weight: 500; /* Medium */
+  font-weight: 500;
   line-height: 1.2;
 }
 
 h4,
-.h4 .overlay-content h4 {
+.h4,
+.overlay-content h4 {
   font-size: 24px;
-  font-weight: 500; /* Medium */
+  font-weight: 500;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -73,46 +73,35 @@ h4,
 
 .p {
   font-size: 21px;
-  font-weight: 400; /* Regular */
+  font-weight: 400;
   line-height: 1.2;
 }
 
 .p2 {
   font-size: 18px;
-  font-weight: 400; /* Regular */
+  font-weight: 400;
   line-height: 1.2;
 }
 
 .p2-bold {
   font-size: 18px;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   line-height: 1.2;
 }
 
 .p3 {
   font-size: 14px;
-  font-weight: 400; /* Regular */
+  font-weight: 400;
   line-height: 1.2;
 }
 
 .p4 {
   font-size: 12px;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   text-transform: uppercase;
   line-height: 1.2;
 }
 
-button,
-.button {
-  font-size: 18px;
-  font-weight: 700; /* Bold */
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-/*----------------------------------------LAYOUT */
-
-/*---------------------------------------- Background*/
 .background-image {
   position: fixed;
   inset: 0;
@@ -122,12 +111,21 @@ button,
   z-index: -1;
   pointer-events: none;
 }
-/*---------------------------------------- game screen layouts*/
 
-.board-container {
-  display: grid;
-  gap: 20px;
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    var(--black) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
 }
+
 #game-container {
   display: flex;
   justify-content: center;
@@ -143,22 +141,23 @@ button,
 
 #game-grid {
   display: grid;
-  position: relative;
-  height: auto;
+  /* position: relative; */
+  /* height: auto; */
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
   gap: 10px;
 }
 
-/*----------------------------------------The Header & Toggle */
+.board-container {
+  display: grid;
+  gap: 20px;
+}
 
 .site-header {
   position: relative;
-  top: 0;
-  left: 0;
   width: 100%;
-  padding: 60px 20px 0px;
+  padding: 60px 10px 0px;
   display: flex;
   justify-content: center;
   z-index: 100;
@@ -175,16 +174,13 @@ button,
   height: 60px;
   margin-bottom: 8px;
 }
-.tagline {
-  font-size: 21px;
-  font-weight: 500;
-  text-align: center;
-}
 
-#instructions-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.tagline {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .header-actions {
@@ -195,9 +191,10 @@ button,
   align-items: center;
   gap: 12px;
 }
+
 .mode-toggle-btn {
   background-color: var(--black);
-  border: 2px solid #1db954;
+  border: 2px solid var(--green);
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -205,10 +202,10 @@ button,
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 24px;
-  top: 24px;
-  transition: all 0.3s ease;
   padding: 0;
+  /* right: 24px;
+  top: 24px; */
+  transition: all 0.3s ease;
 }
 
 .mode-toggle-btn:hover {
@@ -217,17 +214,16 @@ button,
   box-shadow: 0 0 10px rgba(12, 78, 35, 0.5);
 }
 
-/* ----------------------------------------The Icon inside the button */
 .icon-visual {
   width: 22px;
   height: 22px;
-  background-color: #ffffff;
+  background-color: var(--white);
   -webkit-mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
   mask-image: url("https://unpkg.com/@phosphor-icons/core@2.1.1/assets/regular/sun.svg");
   mask-repeat: no-repeat;
   mask-size: contain;
-  -webkit-mask-position: center;
   mask-position: center;
+  -webkit-mask-position: center;
   transition:
     background-color 0.3s ease,
     transform 0.4s ease;
@@ -239,8 +235,14 @@ button,
   display: block;
 }
 
-/*----------------------------------------BASE BUTTON - for all buttons */
-button {
+#instructions-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+button,
+.button {
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
@@ -248,46 +250,43 @@ button {
   letter-spacing: 0.05em;
   cursor: pointer;
   border-radius: var(--radius);
-  padding: 18px 32px;
+  padding: 18px 30px;
   transition: all 0.2s ease;
-  border: 2px solid;
+  border: 2px solid transparent;
 }
 
-/*----------------------------------------PRIMARY BUTTON */
 .btn-primary {
   background-color: var(--green);
   color: var(--black);
-  width: 200px;
   border-color: var(--green);
+  width: 200px;
 }
 
-/*----------------------------------------SECONDARY BUTTON */
+.btn-primary:hover {
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
 .btn-secondary {
   background-color: var(--black);
   color: var(--white);
   border: 2px solid var(--green);
   width: 200px;
 }
-/*----------------------------------------HOVER BUTTON */
-button:hover {
-  transform: translateY(-2px);
-  color: var(--white);
-  border-color: var(--green);
-}
-.btn-primary:hover {
-  background-color: var(--green-dark);
-  border-color: var(--green-dark);
-}
+
 .btn-secondary:hover {
   background-color: var(--green);
   color: var(--black);
   border-color: var(--green);
-  animation-delay: 5s;
+  transform: translateY(-2px);
 }
 
 .btn-reset {
   background-color: var(--green);
   color: var(--black);
+  border-color: var(--green);
   width: 45px;
   height: 45px;
   padding: 0;
@@ -298,6 +297,9 @@ button:hover {
 
 .btn-reset:hover {
   background-color: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+  transform: rotate(-180deg);
 }
 
 .btn-group {
@@ -314,37 +316,39 @@ button:hover {
   align-items: center;
   background-color: var(--green);
   color: var(--black);
-  width: 200px;
-  border-color: var(--green);
+  border: 2px solid var(--green);
   border-radius: var(--radius);
-  columns: var(--black);
+  width: 200px;
   font-weight: 700;
   text-decoration: none;
+  padding: 18px 30px;
+  transition: all 0.2s ease;
 }
 
 #btn-spotify:hover {
   background-color: var(--green-dark);
   border-color: var(--green-dark);
-  text-decoration: none;
   color: var(--white);
   transform: translateY(-2px);
+  text-decoration: none;
 }
-/*----------------------------------------Forms*/
+
 .setup-form {
   width: 100%;
   max-width: 200px;
 }
 .setup-form label {
+  display: block;
   color: var(--green);
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  display: block;
   text-align: center;
   margin-bottom: 8px;
   line-height: 1.2;
 }
+
 #playerName {
   width: 100%;
   height: 60px;
@@ -359,7 +363,6 @@ button:hover {
   line-height: 1.2;
 }
 
-/*----------------------------------------Screens & Visibility*/
 .screen {
   width: 100%;
   display: flex;
@@ -370,27 +373,38 @@ button:hover {
   display: none !important;
 }
 
-/*----------------------------------------Overlays (Unified)*/
-.overlay {
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  background: transparent;
+}
+
+dialog.overlay {
+  display: none;
   position: fixed;
   inset: 0;
-  background-color: var(--green-dark);
-  backdrop-filter: blur(8px);
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  padding: 0;
-  border: none;
   background: transparent;
+  border: none;
+  padding: 0;
+  margin: auto;
+  z-index: 1000;
   color: var(--white);
-  text-align: left;
+}
+
+dialog.overlay[open] {
   display: flex;
 }
 
-.overlay::backdrop {
-  background-color: var(--green-dark);
-  backdrop-filter: blur(1px);
-  background: transparent;
+dialog::backdrop {
+  background-color: var(--black);
+  opacity: 0.8;
 }
 
 .overlay-content {
@@ -399,9 +413,8 @@ button:hover {
   border-radius: 24px;
   padding: 40px;
   text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   margin: 20px;
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -411,11 +424,19 @@ button:hover {
 .overlay-stats {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   background: var(--black);
   padding: 20px;
   border-radius: 12px;
-  margin: 10px 0;
+  width: auto;
+}
+
+.grad {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    var(--black) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 .overlay-stats p {
   width: 100%;
@@ -424,15 +445,35 @@ button:hover {
   font-size: 14px;
 }
 
+.overlay-stats-split {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 10px;
+  justify-content: center;
+}
+
+.overlay-stats-split h4 {
+  width: 100%;
+  text-align: left;
+  color: var(--green);
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
 .overlay-content ul {
   text-align: center;
   list-style: none;
   margin: 10px 0;
 }
+
 .overlay-content li {
-  margin-bottom: 12px;
-  font-size: 14px;
-  line-height: 1.2;
+  margin-bottom: 10px;
+  font-size: 14spx;
+  line-height: 1.4;
+  background-color: var(--black);
+  border-radius: 12px;
+  padding: 20px;
 }
 
 .overlay-content li strong {
@@ -440,12 +481,14 @@ button:hover {
   display: block;
   font-size: 14px;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.4;
 }
+
 .overlay-actions {
   display: flex;
   gap: 12px;
 }
+
 #start-time-limit {
   color: var(--green);
   font-weight: inherit;
@@ -461,77 +504,11 @@ button:hover {
   opacity: 1;
   transform: scale(1);
 }
-.stats-column-one {
-  display: flex;
-  align-items: flex-start;
-}
-
-.overlay-stats-split {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 10px;
-  justify-content: center;
-}
-
-.overlay-stats-split h4 {
-  width: 100%;
-  text-align: left;
-  color: var(--green);
-  margin-bottom: 12px;
-  font-size: 18px;
-  padding-bottom: 8px;
-}
 
 #overlay-loss .overlay-content {
-  border-color: #ff4444;
+  border-color: var(--red);
 }
 
-dialog {
-  border: none;
-  border-radius: 12px;
-  padding: 0;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-}
-
-dialog::backdrop {
-  background-color: var(--black);
-  backdrop-filter: blur(1px);
-}
-
-dialog.overlay {
-  display: none;
-  justify-content: center;
-  position: fixed;
-  background: transparent;
-  padding: 0;
-  margin: auto;
-  inset: 0;
-  border: none;
-  width: 100vw;
-  height: 100vh;
-  max-width: none;
-  max-height: none;
-}
-dialog[open] {
-  display: flex;
-  justify-content: center;
-}
-
-.persona-label {
-  display: flex;
-  color: var(--white);
-  align-content: center;
-}
-.persona-message {
-  display: flex;
-  color: var(--white);
-  align-content: center;
-}
-
-/*----------------------------------------Match Examples*/
 #match-examples {
   display: flex;
   gap: 24px;
@@ -556,7 +533,7 @@ dialog[open] {
   top: -10px;
   right: -10px;
   background: var(--green);
-  color: black;
+  color: var(--black);
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -566,7 +543,6 @@ dialog[open] {
   font-weight: 900;
 }
 
-/*----------------------------------------Game Stats Panel*/
 .score-panel {
   display: flex;
   justify-content: space-around;
@@ -579,46 +555,23 @@ dialog[open] {
   background: var(--black);
 }
 
-.stat {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 8px;
+.stat-details {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 5px;
 }
-.stat span {
+
+.stat-level span,
+.stat-time span,
+.stat-score span,
+.stat-moves span {
   font-size: 12px;
   text-transform: uppercase;
   color: var(--green);
   line-height: 1.2;
 }
-.stat-details {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-/*----------------------------------------Persona Template Styling*/
-.persona-card {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.persona-img {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-  margin: 10px 0;
-}
-
-.persona-description {
-  color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/*-----------------------------------------Cards*/
 
 .card {
   position: relative;
@@ -632,11 +585,7 @@ dialog[open] {
 .card-front,
 .card-back {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -663,7 +612,6 @@ dialog[open] {
 .card.flipped .card-front {
   opacity: 0;
 }
-
 .card.flipped .card-back {
   opacity: 1;
 }
@@ -671,6 +619,7 @@ dialog[open] {
 .card:hover:not(.flipped) .card-front {
   border-color: var(--white);
 }
+
 .card-front svg {
   width: 40%;
   height: auto;
@@ -700,8 +649,56 @@ dialog[open] {
   cursor: default;
 }
 
-.shuffling {
+.card.shuffling {
   animation: shuffle-jiggle 0.5s ease-in-out;
+  opacity: 0.5;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition:
+    transform 0.5s ease-in-out,
+    opacity 0.5s ease-in-out;
+}
+
+.stat {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.stat span {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--green);
+  line-height: 1.2;
+}
+
+.persona-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.persona-img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 10px 0;
+}
+
+.persona-label,
+.persona-message {
+  display: flex;
+  color: var(--white);
+  align-items: center;
+}
+
+.persona-description {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 @keyframes shuffle-jiggle {

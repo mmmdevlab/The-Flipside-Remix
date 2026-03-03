@@ -52,7 +52,7 @@ to be [place] Screenshot/how to play here.
 
 - Increasing number of cards
 - aster countdown timers
-- Added shuffle effects to disrupt memorization
+- Added shuffle effects to disrupt memorization in Intervals
 - Higher scoring potential
 
 **Remix Mechanics**

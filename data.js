@@ -114,7 +114,5 @@ export const buttonMenu = {
 
 export const scoringRules = {
   pointPerMatch: 10,
-  comboMultiplier: 2,
-  efficiencyBonus: { perfect: 50, great: 30, good: 10 },
-  efficiencyThresholds: { perfect: 0, great: 2, good: 5 },
+  streakBonus: 10,
 };

@@ -12,7 +12,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-
     <title>The Flipside Remix</title>
   </head>
 
@@ -22,6 +21,7 @@
       onerror="this.src = './assets/background.png'"
       alt="background setting"
       aria-hidden="true"
+      focusable="false"
       class="background-image"
     />
     <!----------------------------------------------- HEADER - Logo Lockup-->
@@ -31,6 +31,8 @@
           <img
             src="./assets/Game-Lockup.svg"
             onerror="this.src = './assets/Game-Lockup.png'"
+            aria-hidden="true"
+            focusable="false"
             alt="The Flipside Remix Logo"
             class="logo"
           />
@@ -41,11 +43,14 @@
         <button
           id="mode-toggle"
           aria-label="Toggle Light/Dark Mode"
+          aria-pressed="false"
           class="mode-toggle-btn"
         >
           <span class="icon-visual"
             ><img
               src="./icons/Lightmode.svg"
+              aria-hidden="true"
+              focusable="false"
               alt="Light mode icon"
               class="svg-icon"
             />
@@ -119,7 +124,9 @@
             autocomplete="off"
           />
           <div class="btn-group">
-            <button id="btn-play" class="btn-primary">Play Game</button>
+            <button id="btn-play" type="submit" class="btn-primary">
+              Play Game
+            </button>
             <button type="button" id="btn-how" class="btn-secondary">
               How To Play
             </button>
@@ -129,7 +136,7 @@
       <!----------------------------------------------- SCREEN 2: GAME SCREEN -->
       <section id="screen-game" class="screen hidden">
         <div class="board-container">
-          <div id="game-grid">
+          <div id="game-grid" role="grid">
             <!--cards to be created here-->
           </div>
           <!----------------------------------------------- SCREEN 2: SCORE PANEL -->
@@ -156,11 +163,18 @@
               aria-label="Reset Game"
               class="btn-reset"
             >
-              <img
-                src="./icons/RestartIcon.svg"
-                alt="Restart Button"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                fill="#ffffff"
+                viewBox="0 0 256 256"
                 class="svg-icon"
-              />
+              >
+                <path
+                  d="M224,128a96,96,0,0,1-94.71,96H128A95.38,95.38,0,0,1,62.1,197.8a8,8,0,0,1,11-11.63A80,80,0,1,0,71.43,71.39a3.07,3.07,0,0,1-.26.25L44.59,96H72a8,8,0,0,1,0,16H24a8,8,0,0,1-8-8V56a8,8,0,0,1,16,0V85.8L60.25,60A96,96,0,0,1,224,128Z"
+                ></path>
+              </svg>
             </button>
           </div>
         </div>
@@ -168,6 +182,7 @@
     </main>
     <!----------------------------------------------- OVERLAY - Instructions -->
     <dialog
+      role="dialog"
       id="overlay-instructions"
       class="overlay"
       aria-modal="true"
@@ -198,13 +213,17 @@
           </li>
           <li><strong>Combo Up</strong> Match quickly to double points.</li>
         </ul>
-        <button id="btn-close-instructions" class="btn-secondary">
-          Got it!
-        </button>
+        <button id="btn-close-instructions" class="btn-primary">Got it!</button>
       </div>
     </dialog>
     <!----------------------------------------------- OVERLAY - level-start -->
-    <dialog id="overlay-level-start" class="overlay">
+    <dialog
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="overlay-start"
+      id="overlay-level-start"
+      class="overlay"
+    >
       <div class="overlay-content">
         <h4 id="start-level-name">Level 1</h4>
         <div class="overlay-stats">
@@ -221,6 +240,7 @@
 
     <!----------------------------------------------- OVERLAY — WIN -->
     <dialog
+      role="dialog"
       id="overlay-win"
       class="overlay"
       aria-modal="true"
@@ -236,11 +256,11 @@
           </p>
           <p>
             Bonus points:
-            <span id="win-bonus" style="color: var(--green)"></span> pts
+            <span id="win-bonus" style="color: var(--green)">0</span> pts
           </p>
           <p>
-            Level score:
-            <span id="win-score" style="color: var(--green)"></span> pts
+            Total score:
+            <span id="win-score" style="color: var(--green)">0</span> pts
           </p>
           <p>Moves: <span id="win-moves" style="color: var(--green)"></span></p>
         </div>
@@ -249,6 +269,7 @@
     </dialog>
     <!----------------------------------------------- OVERLAY — LOST-->
     <dialog
+      role="dialog"
       id="overlay-loss"
       class="overlay"
       aria-modal="true"
@@ -266,6 +287,7 @@
     </dialog>
     <!----------------------------------------------- OVERLAY - All Levels completed  -->
     <dialog
+      role="dialog"
       id="overlay-complete"
       class="overlay"
       aria-modal="true"
@@ -278,6 +300,19 @@
         <div class="overlay-stats-split">
           <div class="stats-column overlay-stats">
             <h4>Level 3</h4>
+            <p>
+              Time Left:
+              <span id="complete-level-time" style="color: var(--green)"></span>
+              sec
+            </p>
+            <p>
+              Bonus points:
+              <span
+                id="complete-level-bonus"
+                style="color: var(--green)"
+              ></span>
+              pts
+            </p>
             <p>
               Score:
               <span
@@ -293,14 +328,19 @@
                 style="color: var(--green)"
               ></span>
             </p>
-            <p>
-              Time Left:
-              <span id="complete-level-time" style="color: var(--green)"></span>
-              sec
-            </p>
           </div>
           <div class="stats-column overlay-stats">
             <h4>All Levels</h4>
+            <p>
+              Time Saved:
+              <span id="complete-time-saved" style="color: var(--green)"></span>
+              sec
+            </p>
+            <p>
+              Total Bonus:
+              <span id="complete-bonus" style="color: var(--green)"></span>
+              pts
+            </p>
             <p>
               Total Score:
               <span id="complete-score" style="color: var(--green)"></span> pts
@@ -308,11 +348,6 @@
             <p>
               Total Moves:
               <span id="complete-moves" style="color: var(--green)"></span>
-            </p>
-            <p>
-              Total Time Saved:
-              <span id="complete-time-saved" style="color: var(--green)"></span>
-              sec
             </p>
           </div>
         </div>
@@ -323,6 +358,7 @@
     </dialog>
     <!----------------------------------------------- OVERLAY - results show PERSONA  -->
     <dialog
+      role="dialog"
       id="overlay-persona"
       class="overlay"
       aria-modal="true"
@@ -332,9 +368,6 @@
         <h2 id="result-title">🎧 Your Sound Persona</h2>
         <div id="results-points"></div>
         <div class="overlay-actions">
-          <!-- <button type="button" id="download-btn" class="btn-primary">
-            Download
-          </button> -->
           <a
             href="https://open.spotify.com/playlist/0gprAzUVPPXzIkAMQcfGts?si=eb3148179fb64977"
             target="_blank"

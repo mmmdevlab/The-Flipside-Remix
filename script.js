@@ -1,25 +1,24 @@
 import * as GameData from "./data.js";
 import { playSound } from "./soundEffects.js";
 
-/*-------------------------------- Constants --------------------------------*/
-
 /*---------------------------- Variables (state) ----------------------------*/
 
 let playerName = "Guest";
 
 let currentLevel = 0;
 let score = 0;
-let totalScore = 0;
 let moves = 0;
-let totalMoves = 0;
 let timeLeft = 0;
 let timerInterval = null;
+
+let totalScore = 0;
+let totalMoves = 0;
+let totalBonus = 0;
 let totalTimeSaved = 0;
 
 let firstCard = null;
 let secondCard = null;
 let lockBoard = false;
-
 let consecutiveMatches = 0;
 let matchedPairs = 0;
 
@@ -31,7 +30,6 @@ const gameGrid = document.getElementById("game-grid");
 
 const startForm = document.getElementById("start-form");
 const inputName = document.getElementById("playerName");
-const btnPlay = document.getElementById("btn-play");
 const btnHow = document.getElementById("btn-how");
 
 const btnHowHeader = document.getElementById("btn-how-header");
@@ -41,6 +39,11 @@ const btnHome = document.getElementById("btn-home");
 const btnTryAgain = document.getElementById("btn-try-again");
 const btnNextLevel = document.getElementById("btn-next-level");
 
+const levelDisplay = document.getElementById("level-display");
+const timerDisplay = document.getElementById("timer-display");
+const scoreDisplay = document.getElementById("score-display");
+const movesDisplay = document.getElementById("moves-display");
+
 const overlayHow = document.getElementById("overlay-instructions");
 const btnCloseHow = document.getElementById("btn-close-instructions");
 
@@ -48,11 +51,6 @@ const overlayLevelStart = document.getElementById("overlay-level-start");
 const startLevelName = document.getElementById("start-level-name");
 const startTimeLimit = document.getElementById("start-time-limit");
 const startPlayerName = document.getElementById("start-player-name");
-
-const levelDisplay = document.getElementById("level-display");
-const timerDisplay = document.getElementById("timer-display");
-const scoreDisplay = document.getElementById("score-display");
-const movesDisplay = document.getElementById("moves-display");
 
 const overlayWin = document.getElementById("overlay-win");
 const winScore = document.getElementById("win-score");
@@ -69,9 +67,10 @@ const lossLevel = document.getElementById("loss-level");
 const lossPlayerName = document.getElementById("loss-player-name");
 
 const overlayVictory = document.getElementById("overlay-complete");
-const completePlayerName = document.getElementById("complete-player-name");
 const completeScore = document.getElementById("complete-score");
 const completeMoves = document.getElementById("complete-moves");
+const completeBonus = document.getElementById("complete-bonus");
+const completePlayerName = document.getElementById("complete-player-name");
 const completeTimeSaved = document.getElementById("complete-time-saved");
 
 const overlayResults = document.getElementById("overlay-persona");
@@ -79,7 +78,6 @@ const btnShowResults = document.getElementById("btn-show-results");
 
 /*---------------------------- Functions (Game) ----------------------------*/
 
-/*shuffle function----------------------------*/
 const shuffle = (array) => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -89,33 +87,37 @@ const shuffle = (array) => {
   return newArray;
 };
 
-/*flip card----------------------------*/
-const flipCard = (event) => {
-  const card = event.target.closest(".card");
-  if (lockBoard) return;
-  if (card.classList.contains("matched")) return;
-
-  playSound("click");
-
-  if (timerInterval === null) {
-    startCountdown(timeLeft);
-  }
-
-  if (!firstCard) {
-    card.classList.add("flipped");
-    firstCard = card;
-    return;
-  }
-
-  if (card === firstCard) return;
-  card.classList.add("flipped");
-  secondCard = card;
-  lockBoard = true;
-
-  checkForMatch();
+const minPossibleScore = () => {
+  return GameData.levels.reduce((total, level) => {
+    return (
+      total + level.matchPairs.length * GameData.scoringRules.pointPerMatch
+    );
+  }, 0);
 };
 
-/*render the board----------------------------*/
+const maxPossibleScore = () => {
+  let max = 0;
+  GameData.levels.forEach((level) => {
+    const pairs = level.matchPairs.length;
+    const ppm = GameData.scoringRules.pointPerMatch;
+    const bonus = GameData.scoringRules.streakBonus;
+    max += pairs * ppm;
+    max += (pairs - 1) * bonus;
+  });
+  return max;
+};
+const minScore = minPossibleScore();
+const maxScore = maxPossibleScore();
+
+const getPersona = (totalScore, maxScore, minScore) => {
+  const range = maxScore - minScore;
+  const percentage = Math.round(((totalScore - minScore) / range) * 100);
+  const sorted = [...GameData.personas].sort(
+    (a, b) => b.minPercentage - a.minPercentage,
+  );
+  return sorted.find((persona) => percentage >= persona.minPercentage);
+};
+
 const renderBoard = (cards, level) => {
   gameGrid.innerHTML = "";
   gameGrid.style.gridTemplateColumns = `repeat(${level.cols}, 1fr)`;
@@ -152,7 +154,46 @@ const renderBoard = (cards, level) => {
   });
 };
 
-/*start the game----------------------------*/
+const midGameShuffle = () => {
+  lockBoard = true;
+
+  if (firstCard && firstCard.classList) {
+    firstCard.classList.remove("flipped");
+  }
+  if (secondCard && secondCard.classList) {
+    secondCard.classList.remove("flipped");
+  }
+
+  firstCard = null;
+  secondCard = null;
+
+  const allCards = Array.from(document.querySelectorAll(".card"));
+
+  const eligibleCards = allCards.filter(
+    (card) => card && !card.classList.contains("matched"),
+  );
+  for (let i = eligibleCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    const tempNode = document.createElement("div");
+    eligibleCards[i].parentNode.insertBefore(tempNode, eligibleCards[i]);
+    eligibleCards[j].parentNode.insertBefore(
+      eligibleCards[i],
+      eligibleCards[j],
+    );
+    tempNode.parentNode.insertBefore(eligibleCards[j], tempNode);
+    tempNode.remove();
+  }
+
+  eligibleCards.forEach((card) => {
+    card.classList.add("shuffling");
+    setTimeout(() => {
+      card.classList.remove("shuffling");
+      lockBoard = false;
+    }, 500);
+  });
+};
+
 const startGame = () => {
   const typedName = inputName.value.trim();
   playerName = typedName !== "" ? typedName : "Guest";
@@ -197,7 +238,31 @@ const startGame = () => {
   }, 2000);
 };
 
-/*check for match----------------------------*/
+const flipCard = (event) => {
+  const card = event.target.closest(".card");
+  if (lockBoard) return;
+  if (card.classList.contains("matched")) return;
+
+  playSound("click");
+
+  if (timerInterval === null) {
+    startCountdown(timeLeft);
+  }
+
+  if (!firstCard) {
+    card.classList.add("flipped");
+    firstCard = card;
+    return;
+  }
+
+  if (card === firstCard) return;
+  card.classList.add("flipped");
+  secondCard = card;
+  lockBoard = true;
+
+  checkForMatch();
+};
+
 const checkForMatch = () => {
   updateMoves();
 
@@ -226,48 +291,52 @@ const checkForMatch = () => {
   } else {
     //no match
     consecutiveMatches = 0;
+
+    const cardOne = firstCard;
+    const cardTwo = secondCard;
+
+    firstCard = null;
+    secondCard = null;
+
     setTimeout(() => {
-      firstCard.classList.remove("flipped");
-      secondCard.classList.remove("flipped");
-      firstCard = null;
-      secondCard = null;
+      cardOne.classList.remove("flipped");
+      cardTwo.classList.remove("flipped");
       lockBoard = false;
-    }, 1000);
+    }, 600);
   }
 };
 
-/*win&loss condition----------------------------*/
 const checkWin = () => {
   const totalPairs = GameData.levels[currentLevel].matchPairs.length;
+
   if (matchedPairs === totalPairs) {
     stopTimer();
 
-    const bonus = calEfficiencyBonus();
-    // const baseScore = score;
-
-    winBonus.textContent = `+${bonus}`;
-    score += bonus;
-    winScore.textContent = score;
-    scoreDisplay.textContent = score;
-
     setTimeout(() => {
+      const basePoints = totalPairs * GameData.scoringRules.pointPerMatch;
+      const levelStreakBonus = score - basePoints;
+
+      totalScore += score;
+      totalMoves += moves;
+      totalTimeSaved += timeLeft;
+      totalBonus += levelStreakBonus;
+
       if (currentLevel + 1 >= GameData.levels.length) {
         playSound("victory");
-        totalScore += score;
-        totalMoves += moves;
-        totalTimeSaved += timeLeft;
-        showFinalVictory();
+        showFinalVictory(levelStreakBonus);
       } else {
         playSound("winLevel");
-        showWin();
+        showWin(levelStreakBonus);
       }
     }, 600);
   }
 };
 
-const showWin = () => {
+const showWin = (levelBonus) => {
   winPlayerName.textContent = playerName;
   winLevel.textContent = `Level ${currentLevel + 1}`;
+  winScore.textContent = score;
+  winBonus.textContent = `+${levelBonus}`;
   winMoves.textContent = moves;
   winTime.textContent = timeLeft;
   overlayWin.showModal();
@@ -281,167 +350,26 @@ const showLoss = () => {
   overlayLoss.showModal();
 };
 
-const nextLevel = () => {
-  totalScore += score;
-  totalMoves += moves;
-  totalTimeSaved += timeLeft;
-
-  currentLevel++;
-  overlayWin.close();
-  startGame();
-};
-
-/*score panel----------------------------*/
-const resetState = () => {
-  currentLevel = 0;
-  totalScore = 0;
-  totalMoves = 0;
-  totalTimeSaved = 0;
-  firstCard = null;
-  secondCard = null;
-  lockBoard = false;
-};
-
-const resetGame = () => {
-  if (overlayWin.open) overlayWin.close();
-  if (overlayLoss.open) overlayLoss.close();
-  resetState();
-  startGame();
-};
-
-const tryAgain = () => {
-  if (overlayLoss.open) overlayLoss.close();
-
-  firstCard = null;
-  secondCard = null;
-  lockBoard = false;
-  timerInterval = null;
-  consecutiveMatches = 0;
-
-  startGame();
-};
-
-/*stats update----------------------------*/
-
-//timer
-const startCountdown = (seconds) => {
-  timeLeft = seconds;
-  timerDisplay.textContent = timeLeft;
-
-  timerInterval = window.setInterval(() => {
-    timeLeft--;
-    timerDisplay.textContent = timeLeft;
-
-    const levelData = GameData.levels[currentLevel];
-
-    if (levelData.hasShuffle) {
-      if (currentLevel === 1 && timeLeft === 45) {
-        midGameShuffle();
-      }
-      if (currentLevel === 2) {
-        if (timeLeft === 80 || timeLeft === 40) {
-          midGameShuffle();
-        }
-      }
-    }
-    if (timeLeft <= 0) {
-      stopTimer();
-      lockBoard = true;
-      playSound("loss");
-      showLoss();
-    }
-  }, 1000);
-};
-
-const stopTimer = () => {
-  window.clearInterval(timerInterval);
-  timerInterval = null;
-};
-
-//moves
-const updateMoves = () => {
-  moves++;
-  movesDisplay.textContent = moves;
-};
-
-//score
-const updateScore = () => {
-  consecutiveMatches++;
-  let points = GameData.scoringRules.pointPerMatch;
-  const level = GameData.levels[currentLevel];
-
-  if (level.hasCombo && consecutiveMatches > 1) {
-    points = points * GameData.scoringRules.comboMultiplier;
-  }
-
-  score += points;
-  scoreDisplay.textContent = score;
-};
-
-//get total max score
-const maxPossibleScore = () => {
-  let max = 0;
-  GameData.levels.forEach((level) => {
-    const pairs = level.matchPairs.length;
-    const ppm = GameData.scoringRules.pointPerMatch;
-    const combo = GameData.scoringRules.comboMultiplier;
-
-    if (level.hasCombo) {
-      max += ppm + (pairs - 1) * ppm * combo;
-    } else {
-      max += pairs * ppm;
-    }
-
-    max += GameData.scoringRules.efficiencyBonus.perfect;
-  });
-  return max;
-};
-
-const calEfficiencyBonus = () => {
-  const level = GameData.levels[currentLevel];
-  const minMoves = level.matchPairs.length;
-
-  const extraMoves = moves - minMoves;
-  const { efficiencyBonus, efficiencyThresholds } = GameData.scoringRules;
-
-  if (extraMoves <= efficiencyThresholds.perfect)
-    return efficiencyBonus.perfect;
-  if (extraMoves <= efficiencyThresholds.great) return efficiencyBonus.great;
-  if (extraMoves <= efficiencyThresholds.good) return efficiencyBonus.good;
-
-  return 0;
-};
-
-//victory
-const showFinalVictory = () => {
+const showFinalVictory = (levelBonus) => {
   completePlayerName.textContent = playerName;
 
   document.getElementById("complete-level-score").textContent = score;
+  document.getElementById("complete-level-bonus").textContent =
+    `+${levelBonus}`;
   document.getElementById("complete-level-moves").textContent = moves;
   document.getElementById("complete-level-time").textContent = timeLeft;
 
   completeScore.textContent = totalScore;
   completeMoves.textContent = totalMoves;
   completeTimeSaved.textContent = totalTimeSaved;
+  completeBonus.textContent = `+${totalBonus}`;
 
   overlayVictory.showModal();
 };
 
-//check score to persona
-const getPersona = (totalScore) => {
-  const maxScore = maxPossibleScore();
-  const percentage = (totalScore / maxScore) * 100;
-
-  const sorted = [...GameData.personas].sort(
-    (a, b) => b.minPercentage - a.minPercentage,
-  );
-  return sorted.find((persona) => percentage >= persona.minPercentage);
-};
-
-//overlay persona
 const showPersona = () => {
-  const persona = getPersona(totalScore);
-
+  const persona = getPersona(totalScore, maxScore, minScore);
+  if (!persona) return;
   const resultsContainer = document.getElementById("results-points");
   resultsContainer.innerHTML = "";
 
@@ -473,32 +401,92 @@ const showPersona = () => {
   resultsContainer.appendChild(personaCard);
 };
 
-/*mid-game shuffle feature----------------------------*/
+const resetState = () => {
+  currentLevel = 0;
+  totalScore = 0;
+  totalMoves = 0;
+  totalTimeSaved = 0;
+  totalBonus = 0;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  consecutiveMatches = 0;
+};
 
-const midGameShuffle = () => {
-  const allCards = Array.from(document.querySelectorAll(".card"));
+const resetGame = () => {
+  if (overlayWin.open) overlayWin.close();
+  if (overlayLoss.open) overlayLoss.close();
+  resetState();
+  startGame();
+};
 
-  const eligibleCards = allCards.filter(
-    (card) =>
-      !card.classList.contains("matched") &&
-      card !== firstCard &&
-      card !== secondCard,
-  );
-  for (let i = eligibleCards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+const nextLevel = () => {
+  overlayWin.close();
+  currentLevel++;
+  startGame();
+};
 
-    const tempNextSibling = eligibleCards[i].nextSibling;
-    eligibleCards[i].parentNode.insertBefore(
-      eligibleCards[i],
-      eligibleCards[j],
-    );
-    eligibleCards[j].parentNode.insertBefore(eligibleCards[j], tempNextSibling);
+const tryAgain = () => {
+  if (overlayLoss.open) overlayLoss.close();
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  timerInterval = null;
+  consecutiveMatches = 0;
+  startGame();
+};
+
+const startCountdown = (seconds) => {
+  timeLeft = seconds;
+  timerDisplay.textContent = timeLeft;
+  timerInterval = window.setInterval(() => {
+    timeLeft--;
+    timerDisplay.textContent = timeLeft;
+
+    const levelData = GameData.levels[currentLevel];
+
+    if (levelData.hasShuffle) {
+      if (currentLevel === 1) {
+        if (timeLeft === 30 || timeLeft === 60) {
+          midGameShuffle();
+        }
+      }
+      if (currentLevel === 2) {
+        if (timeLeft === 30 || timeLeft === 60 || timeLeft === 90) {
+          midGameShuffle();
+        }
+      }
+    }
+    if (timeLeft <= 0) {
+      stopTimer();
+      lockBoard = true;
+      playSound("loss");
+      showLoss();
+    }
+  }, 1000);
+};
+
+const stopTimer = () => {
+  window.clearInterval(timerInterval);
+  timerInterval = null;
+};
+
+const updateMoves = () => {
+  moves++;
+  movesDisplay.textContent = moves;
+};
+
+const updateScore = () => {
+  consecutiveMatches++;
+
+  let points = GameData.scoringRules.pointPerMatch;
+
+  if (consecutiveMatches > 1) {
+    points += GameData.scoringRules.streakBonus;
   }
 
-  eligibleCards.forEach((card) => {
-    card.classList.add("shuffling");
-    setTimeout(() => card.classList.remove("shuffling"), 500);
-  });
+  score += points;
+  scoreDisplay.textContent = score;
 };
 
 /*----------------------------- Event Listeners -----------------------------*/
@@ -508,18 +496,11 @@ startForm.addEventListener("submit", (event) => {
   startGame();
 });
 
-btnHow.addEventListener("click", () => {
-  overlayHow.showModal();
-});
-btnCloseHow.addEventListener("click", () => {
-  overlayHow.close();
-});
-btnHowHeader.addEventListener("click", () => {
-  overlayHow.showModal();
-});
+btnHow.addEventListener("click", () => overlayHow.showModal());
+btnCloseHow.addEventListener("click", () => overlayHow.close());
+btnHowHeader.addEventListener("click", () => overlayHow.showModal());
 
 btnReset.addEventListener("click", resetGame);
-
 btnTryAgain.addEventListener("click", tryAgain);
 btnNextLevel.addEventListener("click", nextLevel);
 
