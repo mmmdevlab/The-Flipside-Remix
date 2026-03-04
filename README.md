@@ -66,16 +66,16 @@ Beyond memory and music knowledge, the game measures performance and assigns pla
 link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 
 **The Soundwave Sage**
-- score -> 80% - 100%
+- score -> 75% - 100%
 
 **The Beat Devotee**
-- score -> 60% - 79%
-
+- score -> 50% - 74%
+  
 **The Rhythm Rover**
-- score -> 40% - 59%
-- 
+- score -> 20% - 49%
+  
 **The Silent Mode Starter**
-- score -> 0% - 39%
+- score -> 0% - 19%
 
 ### Approach to Development
 
@@ -83,13 +83,12 @@ link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 
 - MVP - Defined the minimum viable product to keep the build focused
 - User stories - Wrote user stories to clarify player interactions
-  - link to [add UserStories.md]
+  - link to [Planning/UserStories.md]
 - Wireframe - Created wireframes to map layout and information hierarchy
   - Figuring out Artists and songs research (with the help of AI)
     - link [https://chatgpt.com/share/699d46f2-9670-8012-a42a-468f52e06452]
-    - link to [add wireframe folder]
 - Presudocode - Outlined game logic flow before writing JavaScript
-  - link to [add presudocode.js]
+  - link to [to add presudocode.js]
 - Game state - Defined all state variables upfront: score, timer, moves, level, flipped cards, matched cards
 
 ## 2 Developing
@@ -99,7 +98,7 @@ link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
     - Start screen with player name input and match examples
     - Game screen with card grid and live score panel (level, time, score, moves)
     - Overlay system for: level start, win, loss, final victory, and persona results
-    - Semantic elements throughout (<header>, <main>, <section>, <dialog>)
+    - Semantic elements throughout (header, main, section, dialog)
   - **CSS**
     - CSS custom properties to match the brand 
     - Flexbox for page layout, header, score panel, overlays, and button groups
@@ -167,12 +166,12 @@ link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 
 ### Sound Personas
 
-| Persona           | Score Range | Tier   |
-|:----------------: |:-----------:|:------:|
-| Soundwave Sage    | 500–550     | 80–100%|
-| Beat Devotee      | 446–499     | 60–79% |
-| Rhythm Rover      | 392–445     | 40–59% | 
-|Silent Mode Starter| 290–391     | 0–39%  |
+| Persona | Score Range | Tier |
+|---|---|---|
+| 🎧 Soundwave Sage      | 485–550 | 75–100% |
+| 🎵 Beat Devotee        | 420–484 | 50–74%  |
+| 🎶 Rhythm Rover        | 342–419 | 20–49%  |
+| 🔇 Silent Mode Starter | 290–341 | 0–19%   |
 
 ### Testing & Debugging
 - Accessibility
@@ -188,3 +187,24 @@ link: [https://chatgpt.com/share/699d39d6-503c-8012-8576-0a4dbf6d0a6d]
 - Download persona card to share on social
 
 ### References
+| `window.setTimeout()` | [MDN — setTimeout()](https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout) |
+
+| `window.setInterval()` | [MDN — setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval) |
+
+| `Node.parentNode` | [MDN — Node.parentNode](https://developer.mozilla.org/en-US/docs/Web/API/Node/parentNode) |
+
+| `Element.closest()` | [MDN — Element.closest()](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) |
+
+| Score normalisation formula | [Stack Overflow — Normalise a number from 0–1](https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1) |
+
+| Fisher-Yates shuffle algorithm | [Stack Overflow — Fisher-Yates shuffle in JavaScript](https://stackoverflow.com/questions/59810241/how-to-fisher-yates-shuffle-a-javascript-array) |
+
+| `<dialog>` element | [MDN — HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog) |
+
+| `aria-controls` attribute | [MDN — aria-controls](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-controls) |
+
+| ARIA & HTML accessibility | [web.dev — ARIA and HTML](https://web.dev/learn/accessibility/aria-html) |
+
+| `cubic-bezier()` easing | [CSS-Tricks — cubic-bezier()](https://css-tricks.com/almanac/functions/c/cubic-bezier/) |
+
+| `:modal` CSS selector | [MDN — :modal](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:modal) |
