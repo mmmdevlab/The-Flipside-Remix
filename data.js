@@ -85,7 +85,7 @@ export const personas = [
     message: "You surf the soundwaves.",
     description: `You dip in when the mood hits. Some days it’s nonstop streaming, other days it’s radio silence. You lean into trending tracks, viral hits, and curated playlists. Music finds you more than you hunt for it.`,
     img: "./assets/Persona3.png",
-    minPercentage: 30,
+    minPercentage: 20,
     percentage: "20-49%",
   },
   {
@@ -101,19 +101,4 @@ export const personas = [
 export const scoringRules = {
   pointPerMatch: 10,
   streakBonus: 10,
-};
-
-/*----------------------------- Data Graveyard -----------------------------*/
-export const buttonMenu = {
-  mainMenu: [
-    { id: "play", text: "Play" },
-    { id: "how-to", text: "How to Play", type: "hover" },
-  ],
-  winOverlay: [{ id: "next", text: "Next Level" }],
-  lostOverlay: [{ id: "retry", text: "Try Again" }],
-  victoryOverlay: [{ id: "result", text: "View Results" }],
-  resultOverlay: [
-    { id: "download", text: "Download" },
-    { id: "share", text: "Share" },
-  ],
 };
