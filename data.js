@@ -10,10 +10,10 @@ export const levels = [
     matchPairs: [
       { artist: "Bad Bunny", title: "Monaco" },
       { artist: "Billie Eilish", title: "Birds of a Feather" },
-      { artist: "Kendrick Lamar", title: "Not Like Us" },
-      { artist: "Post Malone", title: "I Had Some Help" },
+      { artist: "Eminem", title: "Rap God" },
       { artist: "Taylor Swift", title: "Cruel Summer" },
       { artist: "The Weeknd", title: "Blinding Lights" },
+      { artist: "Queen", title: "Bohemian Rhapsody" },
     ],
   },
   {
@@ -52,10 +52,10 @@ export const levels = [
       { artist: "NewJeans", title: "Super Shy" },
       { artist: "Travis Scott", title: "FE!N" },
       { artist: "Lady Gaga", title: "Disease" },
-      { artist: "Eminem", title: "Rap God" },
+      { artist: "Kendrick Lamar", title: "Not Like Us" },
       { artist: "Rihanna", title: "Lift Me Up" },
       { artist: "Green Day", title: "American Idiot" },
-      { artist: "Queen", title: "Bohemian Rhapsody" },
+      { artist: "Post Malone", title: "I Had Some Help" },
       { artist: "Coldplay", title: "Yellow" },
       { artist: "Big Bang", title: "Bang Bang Bang" },
       { artist: "Ed Sheeran", title: "Shivers" },
@@ -69,24 +69,24 @@ export const personas = [
     message: "You don’t just listen. You live in surround sound.",
     description: `Music is your oxygen. You’ve got playlists for moods you haven’t even felt yet. New drops? Already saved. Deep cuts? Already looping. Your algorithm bows to you. You discover trends first.`,
     img: "./assets/Persona1.png",
-    minPercentage: 80,
-    percentage: "80-100%",
+    minPercentage: 75,
+    percentage: "75-100%",
   },
   {
     name: "The Beat Devotee",
     message: "Your life has a solid soundtrack.",
     description: `You show up for the music. Commutes, workouts, late nights — you’ve got a curated vibe ready. You revisit favorites but still explore enough to keep things fresh. You’re loyal… but not predictable.`,
     img: "./assets/Persona2.png",
-    minPercentage: 60,
-    percentage: "60-79%",
+    minPercentage: 50,
+    percentage: "50-74%",
   },
   {
     name: "The Rhythm Rover",
     message: "You surf the soundwaves.",
     description: `You dip in when the mood hits. Some days it’s nonstop streaming, other days it’s radio silence. You lean into trending tracks, viral hits, and curated playlists. Music finds you more than you hunt for it.`,
     img: "./assets/Persona3.png",
-    minPercentage: 40,
-    percentage: "40-59%",
+    minPercentage: 30,
+    percentage: "20-49%",
   },
   {
     name: "The Silent Mode Starter",
@@ -94,10 +94,16 @@ export const personas = [
     description: `You’ve got potential. Your account is warming up, but your speakers are waiting. This is your sign to press play more often. The soundtrack of your life? Still buffering.`,
     img: "./assets/Persona4.png",
     minPercentage: 0,
-    percentage: "0-39%",
+    percentage: "0-19%",
   },
 ];
 
+export const scoringRules = {
+  pointPerMatch: 10,
+  streakBonus: 10,
+};
+
+/*----------------------------- Data Graveyard -----------------------------*/
 export const buttonMenu = {
   mainMenu: [
     { id: "play", text: "Play" },
@@ -110,9 +116,4 @@ export const buttonMenu = {
     { id: "download", text: "Download" },
     { id: "share", text: "Share" },
   ],
-};
-
-export const scoringRules = {
-  pointPerMatch: 10,
-  streakBonus: 10,
 };

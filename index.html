@@ -24,7 +24,7 @@
       focusable="false"
       class="background-image"
     />
-    <!----------------------------------------------- HEADER - Logo Lockup-->
+
     <header class="site-header">
       <div class="header-center">
         <div class="logo-lockup">
@@ -77,9 +77,7 @@
       </div>
     </header>
 
-    <!----------------------------------------------- MAIN GAME CONTAINER -->
     <main id="game-container">
-      <!----------------------------------------------- SCREEN 1: START SCREEN -->
       <section id="screen-start" class="screen">
         <div id="match-examples">
           <div class="match-pair">
@@ -113,7 +111,6 @@
           </div>
         </div>
 
-        <!----------------------------------------------- Player name input + action buttons -->
         <form id="start-form" class="setup-form">
           <label for="playerName">Player Name</label>
           <input
@@ -133,7 +130,6 @@
           </div>
         </form>
       </section>
-      <!----------------------------------------------- SCREEN 2: GAME SCREEN -->
       <section id="screen-game" class="screen hidden">
         <div class="board-container">
           <div id="game-grid" role="grid">
@@ -180,7 +176,6 @@
         </div>
       </section>
     </main>
-    <!----------------------------------------------- OVERLAY - Instructions -->
     <dialog
       role="dialog"
       id="overlay-instructions"
@@ -216,7 +211,7 @@
         <button id="btn-close-instructions" class="btn-primary">Got it!</button>
       </div>
     </dialog>
-    <!----------------------------------------------- OVERLAY - level-start -->
+
     <dialog
       role="dialog"
       aria-modal="true"
@@ -238,7 +233,6 @@
       </div>
     </dialog>
 
-    <!----------------------------------------------- OVERLAY — WIN -->
     <dialog
       role="dialog"
       id="overlay-win"
@@ -267,7 +261,7 @@
         <button id="btn-next-level" class="btn-primary">Next Level</button>
       </div>
     </dialog>
-    <!----------------------------------------------- OVERLAY — LOST-->
+
     <dialog
       role="dialog"
       id="overlay-loss"
@@ -285,7 +279,7 @@
         <button id="btn-try-again" class="btn-primary">Try Again</button>
       </div>
     </dialog>
-    <!----------------------------------------------- OVERLAY - All Levels completed  -->
+
     <dialog
       role="dialog"
       id="overlay-complete"
@@ -356,7 +350,7 @@
         </button>
       </div>
     </dialog>
-    <!----------------------------------------------- OVERLAY - results show PERSONA  -->
+
     <dialog
       role="dialog"
       id="overlay-persona"

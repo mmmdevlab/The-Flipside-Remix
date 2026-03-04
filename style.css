@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-/*----------------------------------------The "Root" & Reset*/
+
 :root {
   --green: #1ed760;
   --green-dark: #007c2c;
@@ -128,7 +128,6 @@ body::after {
 
 #game-container {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -141,8 +140,6 @@ body::after {
 
 #game-grid {
   display: grid;
-  /* position: relative; */
-  /* height: auto; */
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
@@ -579,7 +576,8 @@ dialog::backdrop {
   aspect-ratio: 1;
   cursor: pointer;
   background-color: transparent;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-front,
@@ -591,7 +589,9 @@ dialog::backdrop {
   justify-content: center;
   border-radius: 12px;
   border: 1px solid var(--green);
-  transition: opacity 0.2s ease-in-out;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* transition: opacity 0.2s ease-in-out; */
 }
 
 .card-front {
@@ -605,16 +605,18 @@ dialog::backdrop {
   padding: 8px;
   font-size: 14px;
   text-align: center;
-  z-index: 1;
-  opacity: 0;
+  transform: rotateY(180deg);
 }
 
-.card.flipped .card-front {
+.card.flipped {
+  transform: rotateY(180deg);
+}
+/* .card.flipped .card-front {
   opacity: 0;
 }
 .card.flipped .card-back {
   opacity: 1;
-}
+} */
 
 .card:hover:not(.flipped) .card-front {
   border-color: var(--white);

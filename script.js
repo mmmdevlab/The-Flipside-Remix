@@ -1,8 +1,6 @@
 import * as GameData from "./data.js";
 import { playSound } from "./soundEffects.js";
 
-/*---------------------------- Variables (state) ----------------------------*/
-
 let playerName = "Guest";
 
 let currentLevel = 0;
@@ -21,8 +19,6 @@ let secondCard = null;
 let lockBoard = false;
 let consecutiveMatches = 0;
 let matchedPairs = 0;
-
-/*------------------------ Cached Element References ------------------------*/
 
 const screenStart = document.getElementById("screen-start");
 const screenGame = document.getElementById("screen-game");
@@ -75,8 +71,6 @@ const completeTimeSaved = document.getElementById("complete-time-saved");
 
 const overlayResults = document.getElementById("overlay-persona");
 const btnShowResults = document.getElementById("btn-show-results");
-
-/*---------------------------- Functions (Game) ----------------------------*/
 
 const shuffle = (array) => {
   const newArray = [...array];
@@ -149,7 +143,6 @@ const renderBoard = (cards, level) => {
     cardElement.appendChild(cardFront);
     cardElement.appendChild(cardBack);
     gameGrid.appendChild(cardElement);
-    // console.log(cardElement);
     cardElement.addEventListener("click", flipCard);
   });
 };
@@ -267,7 +260,6 @@ const checkForMatch = () => {
   updateMoves();
 
   if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
-    //match
     matchedPairs++;
     playSound("match");
     updateScore();
@@ -289,7 +281,6 @@ const checkForMatch = () => {
 
     checkWin();
   } else {
-    //no match
     consecutiveMatches = 0;
 
     const cardOne = firstCard;
@@ -302,7 +293,7 @@ const checkForMatch = () => {
       cardOne.classList.remove("flipped");
       cardTwo.classList.remove("flipped");
       lockBoard = false;
-    }, 600);
+    }, 1100);
   }
 };
 
@@ -488,8 +479,6 @@ const updateScore = () => {
   score += points;
   scoreDisplay.textContent = score;
 };
-
-/*----------------------------- Event Listeners -----------------------------*/
 
 startForm.addEventListener("submit", (event) => {
   event.preventDefault();
